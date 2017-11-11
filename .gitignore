@@ -1,0 +1,6 @@
+app.config
+bin/
+
+obj/
+
+Program.cs
