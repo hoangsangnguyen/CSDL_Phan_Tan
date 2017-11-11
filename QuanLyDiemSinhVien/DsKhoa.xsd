@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DsKhoa" targetNamespace="http://tempuri.org/DsKhoa.xsd" xmlns:mstns="http://tempuri.org/DsKhoa.xsd" xmlns="http://tempuri.org/DsKhoa.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="QLDSVConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="QLDSVConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.QuanLyDiemSinhVien.Properties.Settings.GlobalReference.Default.QLDSVConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="V_DS_PHANMANGTableAdapter" GeneratorDataComponentClassName="V_DS_PHANMANGTableAdapter" Name="V_DS_PHANMANG" UserDataComponentName="V_DS_PHANMANGTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="QLDSVConnectionString (Settings)" DbObjectName="QLDSV.dbo.V_DS_PHANMANG" DbObjectType="View" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT TENCN, TENSERVER FROM dbo.V_DS_PHANMANG</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="TENCN" DataSetColumn="TENCN" />
+              <Mapping SourceColumn="TENSERVER" DataSetColumn="TENSERVER" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DsKhoa" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DsKhoa" msprop:Generator_UserDSName="DsKhoa">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="V_DS_PHANMANG" msprop:Generator_TableClassName="V_DS_PHANMANGDataTable" msprop:Generator_TableVarName="tableV_DS_PHANMANG" msprop:Generator_TablePropName="V_DS_PHANMANG" msprop:Generator_RowDeletingName="V_DS_PHANMANGRowDeleting" msprop:Generator_RowChangingName="V_DS_PHANMANGRowChanging" msprop:Generator_RowEvHandlerName="V_DS_PHANMANGRowChangeEventHandler" msprop:Generator_RowDeletedName="V_DS_PHANMANGRowDeleted" msprop:Generator_UserTableName="V_DS_PHANMANG" msprop:Generator_RowChangedName="V_DS_PHANMANGRowChanged" msprop:Generator_RowEvArgName="V_DS_PHANMANGRowChangeEvent" msprop:Generator_RowClassName="V_DS_PHANMANGRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="TENCN" msprop:Generator_ColumnVarNameInTable="columnTENCN" msprop:Generator_ColumnPropNameInRow="TENCN" msprop:Generator_ColumnPropNameInTable="TENCNColumn" msprop:Generator_UserColumnName="TENCN" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="255" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="TENSERVER" msprop:Generator_ColumnVarNameInTable="columnTENSERVER" msprop:Generator_ColumnPropNameInRow="TENSERVER" msprop:Generator_ColumnPropNameInTable="TENSERVERColumn" msprop:Generator_UserColumnName="TENSERVER" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="128" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
