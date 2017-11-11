@@ -1,6 +1,8 @@
 app.config
-bin/
+QuanLyDiemSinhVien/bin/
 
-obj/
+QuanLyDiemSinhVien/obj/
 
 Program.cs
+
+QuanLyDiemSinhVien.v12.suo

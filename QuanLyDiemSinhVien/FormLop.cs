@@ -186,7 +186,7 @@ namespace QuanLyDiemSinhVien
                     }
                     gcLop.Enabled = true;
                     btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
-                    btnGhi.Enabled = btnPhucHoi.Enabled = false;
+                    btnGhi.Enabled = false;
 
                     groupBox1.Enabled = false;
                     break;
@@ -236,7 +236,7 @@ namespace QuanLyDiemSinhVien
                     }
                     gcLop.Enabled = true;
                     btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
-                    btnGhi.Enabled = btnPhucHoi.Enabled = false;
+                    btnGhi.Enabled = false;
 
                     groupBox1.Enabled = false;
 
@@ -328,12 +328,35 @@ namespace QuanLyDiemSinhVien
 
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            bdsDsLop.CancelEdit();
-            if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
-            gcLop.Enabled = true;
-            groupBox1.Enabled = false;
-            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
-            btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            //if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
+            //{
+            //    bdsDsLop.CancelEdit();
+            //    if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
+            //    gcLop.Enabled = true;
+            //    groupBox1.Enabled = false;
+            //    btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+            //    btnGhi.Enabled = btnPhucHoi.Enabled = false;
+            //}
+            //else
+            //{
+                if (st.Count == 0)
+                    return;
+
+                ObjectUndo ob = (ObjectUndo)st.Pop();
+                if (ob.getType() == THEM)
+                {
+                    MessageBox.Show("Khôi phục sau khi thêm " + ob.getLenh());
+                    Program.ExecSqlDataReader(ob.getLenh());
+                    this.lOPTableAdapter.Fill(this.dS.LOP);
+                    if (st.Count == 0)
+                    {
+                        btnPhucHoi.Enabled = false;
+                        //MessageBox.Show("Không có gì để Phục hồi", "THÔNG BÁO", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+
+            //}
         }
 
         private void updateUIButtonPhucHoi()
