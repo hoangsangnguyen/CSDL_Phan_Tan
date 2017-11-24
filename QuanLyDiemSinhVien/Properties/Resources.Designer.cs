@@ -63,6 +63,16 @@ namespace QuanLyDiemSinhVien.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Actions_list_add_user_icon_24 {
+            get {
+                object obj = ResourceManager.GetObject("Actions-list-add-user-icon-24", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Apps_session_Exit_icon_48 {
             get {
                 object obj = ResourceManager.GetObject("Apps-session-Exit-icon-48", resourceCulture);

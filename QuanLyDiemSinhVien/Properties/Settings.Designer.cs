@@ -43,25 +43,5 @@ namespace QuanLyDiemSinhVien.Properties {
                 return ((string)(this["QLDSVConnectionString1"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-BEBH2F7;Initial Catalog=QLDSV;Integrated Security=True")]
-        public string QLDSVConnectionString2 {
-            get {
-                return ((string)(this["QLDSVConnectionString2"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-BEBH2F7\\SERVER2;Initial Catalog=QLDSV;User ID=sa")]
-        public string QLDSVConnectionString3 {
-            get {
-                return ((string)(this["QLDSVConnectionString3"]));
-            }
-        }
     }
 }

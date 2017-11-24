@@ -201,6 +201,7 @@
             this.btnExit.Id = 6;
             this.btnExit.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Exit_24_icon;
             this.btnExit.Name = "btnExit";
+            this.btnExit.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnExit_ItemClick);
             // 
             // bar3
             // 
@@ -259,9 +260,9 @@
             // cmbKhoa
             // 
             this.cmbKhoa.FormattingEnabled = true;
-            this.cmbKhoa.Location = new System.Drawing.Point(351, 17);
+            this.cmbKhoa.Location = new System.Drawing.Point(333, 17);
             this.cmbKhoa.Name = "cmbKhoa";
-            this.cmbKhoa.Size = new System.Drawing.Size(121, 27);
+            this.cmbKhoa.Size = new System.Drawing.Size(189, 27);
             this.cmbKhoa.TabIndex = 1;
             this.cmbKhoa.SelectedIndexChanged += new System.EventHandler(this.cmbKhoa_SelectedIndexChanged);
             // 
@@ -307,7 +308,7 @@
             this.gcLop.MainView = this.gridView1;
             this.gcLop.MenuManager = this.barManager1;
             this.gcLop.Name = "gcLop";
-            this.gcLop.Size = new System.Drawing.Size(795, 118);
+            this.gcLop.Size = new System.Drawing.Size(795, 169);
             this.gcLop.TabIndex = 14;
             this.gcLop.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -325,6 +326,7 @@
             // 
             this.colMALOP.FieldName = "MALOP";
             this.colMALOP.Name = "colMALOP";
+            this.colMALOP.OptionsColumn.AllowEdit = false;
             this.colMALOP.Visible = true;
             this.colMALOP.VisibleIndex = 0;
             // 
@@ -351,9 +353,9 @@
             this.groupBox1.Controls.Add(mALOPLabel);
             this.groupBox1.Controls.Add(this.txtMaLop);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(0, 213);
+            this.groupBox1.Location = new System.Drawing.Point(0, 264);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(795, 208);
+            this.groupBox1.Size = new System.Drawing.Size(795, 157);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             // 

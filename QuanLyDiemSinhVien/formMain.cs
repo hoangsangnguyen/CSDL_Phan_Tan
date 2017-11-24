@@ -61,5 +61,17 @@ namespace QuanLyDiemSinhVien
         {
             Close();
         }
+
+        private void btnSinhVien_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(FormSinhVien));
+            if (frm != null) frm.Activate();
+            else
+            {
+                FormSinhVien f = new FormSinhVien();
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
     }
 }

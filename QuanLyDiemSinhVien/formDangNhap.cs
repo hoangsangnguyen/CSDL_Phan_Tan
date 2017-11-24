@@ -48,10 +48,9 @@ namespace QuanLyDiemSinhVien
             Program.mGroup = Program.myReader.GetString(2);
             Program.myReader.Close();
             Program.conn.Close();
-            //Program.frmMain.MAGV.Text = "Mã NV = " + Program.username;
-            //Program.frmMain.TENGV.Text = "Họ tên= " + Program.mHoten;
-            //Program.frmMain.KHOA.Text = "Nhóm = " + Program.mGroup;
+           
             Program.frmMain.HienThiMenu();
+            this.Hide();
         }
 
         private void formDangNhap_Load(object sender, EventArgs e)

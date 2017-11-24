@@ -13,26 +13,6 @@ namespace QuanLyDiemSinhVien
 {
     public partial class FormLop : Form
     {
-        public class ObjectUndo
-        {
-            int type;
-            String lenh;
-
-            public ObjectUndo(int type, String lenh)
-            {
-                this.type = type;
-                this.lenh = lenh;
-            }
-
-            public int getType()
-            {
-                return type;
-            }
-            public String getLenh()
-            {
-                return lenh;
-            }
-        }
 
         public Stack st = new Stack();
 
@@ -60,7 +40,7 @@ namespace QuanLyDiemSinhVien
         private void FormLop_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'dS.SINHVIEN' table. You can move, or remove it, as needed.
-          
+
             // TODO: This line of code loads data into the 'dS.LOP' table. You can move, or remove it, as needed.
             dS.EnforceConstraints = false;
             this.lOPTableAdapter.Fill(this.dS.LOP);
@@ -70,7 +50,6 @@ namespace QuanLyDiemSinhVien
             this.sINHVIENTableAdapter.Fill(this.dS.SINHVIEN);
             this.sINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
 
-            //this.lOPTableAdapter.Fill(this.dS.LOP);
             maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
             cmbKhoa.DataSource = Program.bds_dspm;  // sao chép bds_dspm đã load ở form đăng nhập  qua
             cmbKhoa.DisplayMember = "TENCN";
@@ -82,6 +61,8 @@ namespace QuanLyDiemSinhVien
             else
                 cmbKhoa.Enabled = false;
 
+            groupBox1.Enabled = false;
+            btnGhi.Enabled = false;
             updateUIButtonPhucHoi();
         }
 
@@ -118,11 +99,13 @@ namespace QuanLyDiemSinhVien
             groupBox1.Enabled = true;
             bdsDsLop.AddNew();
             txtMaKhoa.Text = maKhoa;
+            txtMaKhoa.Enabled = false;
+
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnGhi.Enabled = btnReload.Enabled = true;
             gcLop.Enabled = false;
             choose = THEM;
-
+            btnPhucHoi.Enabled = true;
         }
 
         private void btnGhi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -153,17 +136,29 @@ namespace QuanLyDiemSinhVien
                     Program.sqlcmd.Parameters.Add("@X", SqlDbType.Text).Value = txtMaLop.Text;
                     Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
                     Program.sqlcmd.ExecuteNonQuery();
-                    Program.conn.Close();
                     String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
                     if (Ret == "1")
                     {
                         MessageBox.Show("Mã lớp bị trùng!", "", MessageBoxButtons.OK);
                         txtMaLop.Focus();
+                        Program.conn.Close();
                         return;
                     }
-                    else
+
+                    String strLenhKiemTra = "dbo.sp_KiemTraTenLop";
+                    Program.sqlcmd = Program.conn.CreateCommand();
+                    Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                    Program.sqlcmd.CommandText = strLenhKiemTra;
+                    Program.sqlcmd.Parameters.Add("@TENLOP", SqlDbType.Text).Value = txtTenLop.Text;
+                    Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                    Program.sqlcmd.ExecuteNonQuery();
+                    Program.conn.Close();
+                    String RetKiemTra = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+                    if (RetKiemTra == "1")
                     {
-                        MessageBox.Show("Co the them duoc", "", MessageBoxButtons.OK);
+                        MessageBox.Show("Tên lớp bị trùng!", "", MessageBoxButtons.OK);
+                        txtTenLop.Focus();
+                        return;
                     }
 
                     try
@@ -172,8 +167,9 @@ namespace QuanLyDiemSinhVien
                         bdsDsLop.ResetCurrentItem();
                         this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                         this.lOPTableAdapter.Update(this.dS.LOP);
+                        MessageBox.Show("Thêm lớp thành công", "", MessageBoxButtons.OK);
 
-                        string lenh = "exec sp_UndoThemLop '" + txtMaLop.Text + "'";
+                        String lenh = "exec sp_UndoThemLop '" + txtMaLop.Text + "'";
                         ObjectUndo obj = new ObjectUndo(THEM, lenh);
                         st.Push(obj);
                         updateUIButtonPhucHoi();
@@ -192,6 +188,22 @@ namespace QuanLyDiemSinhVien
                     break;
 
                 case HIEU_CHINH:
+                    String tenLop = ((DataRowView)bdsDsLop[vitri])["TENLOP"].ToString().Trim();
+                    if (txtTenLop.Text.Trim().Equals(tenLop))
+                    {
+                        if (MessageBox.Show("Bạn đã không thay đổi gì, bạn có muốn thoát chỉnh sửa ?", "Xác nhận",
+                              MessageBoxButtons.OKCancel) == DialogResult.OK)
+                        {
+                            gcLop.Enabled = true;
+                            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+                            btnGhi.Enabled = false;
+
+                            groupBox1.Enabled = false;
+                        }
+
+                        return;
+                    }
+
                     if (txtTenLop.Text.Trim() == "")
                     {
                         MessageBox.Show("Tên lớp không được thiếu!", "", MessageBoxButtons.OK);
@@ -216,10 +228,6 @@ namespace QuanLyDiemSinhVien
                         txtMaLop.Focus();
                         return;
                     }
-                    else
-                    {
-                        MessageBox.Show("Có thể update được", "", MessageBoxButtons.OK);
-                    }
 
                     try
                     {
@@ -227,6 +235,8 @@ namespace QuanLyDiemSinhVien
                         bdsDsLop.ResetCurrentItem();
                         this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                         this.lOPTableAdapter.Update(this.dS.LOP);
+
+                        MessageBox.Show("Update thành công", "", MessageBoxButtons.OK);
 
                     }
                     catch (Exception ex)
@@ -253,8 +263,16 @@ namespace QuanLyDiemSinhVien
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnGhi.Enabled = btnPhucHoi.Enabled = true;
             txtMaLop.Enabled = txtMaKhoa.Enabled = false;
+            txtTenLop.Focus();
             gcLop.Enabled = false;
             choose = HIEU_CHINH;
+
+            // lưu stack cho undo
+            Lop lop = new Lop(txtMaLop.Text, txtTenLop.Text, txtMaKhoa.Text);
+            ObjectUndo obj = new ObjectUndo(HIEU_CHINH, lop);
+            st.Push(obj);
+
+            updateUIButtonPhucHoi();
         }
 
         private String convertStringToUTF8(String s)
@@ -263,7 +281,7 @@ namespace QuanLyDiemSinhVien
             var uniEnc = Encoding.Unicode;
             byte[] dbByte = dbEnc.GetBytes(s);
             byte[] uniBytes = Encoding.Convert(dbEnc, uniEnc, dbByte);
-            
+
             return uniEnc.GetString(uniBytes);
         }
 
@@ -286,22 +304,32 @@ namespace QuanLyDiemSinhVien
                        MessageBoxButtons.OK);
                 return;
             }
-           
+
             String maLop = "";
-          
+
             if (MessageBox.Show("Bạn có thật sự muốn xóa nhân viên này ?? ", "Xác nhận",
                        MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 try
                 {
-                    maLop = ((DataRowView)bdsDsLop[bdsDsLop.Position])["MALOP"].ToString(); // giữ lại để khi xóa bij lỗi thì ta sẽ quay về lại
+                    DataRowView dataRow = (DataRowView)bdsDsLop[bdsDsLop.Position];
+                    maLop = dataRow["MALOP"].ToString(); // giữ lại để khi xóa bij lỗi thì ta sẽ quay về lại
+                    String tenLop = dataRow["TENLOP"].ToString();
+                    String maKhoa = dataRow["MAKH"].ToString();
+                    Lop lopRemove = new Lop(maLop, tenLop, maKhoa);
+                    ObjectUndo obj = new ObjectUndo(XOA, lopRemove);
+
                     bdsDsLop.RemoveCurrent();
                     this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                     this.lOPTableAdapter.Update(this.dS.LOP);
+
+                    st.Push(obj);
+                    updateUIButtonPhucHoi();
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Lỗi xóa nhân viên. Bạn hãy xóa lại\n" + ex.Message, "",
+                    MessageBox.Show("Lỗi xóa lớp. Bạn hãy xóa lại\n" + ex.Message, "",
                         MessageBoxButtons.OK);
                     this.lOPTableAdapter.Fill(this.dS.LOP);
                     bdsDsLop.Position = bdsDsLop.Find("MALOP", maLop);
@@ -314,49 +342,146 @@ namespace QuanLyDiemSinhVien
 
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            try
+            reload();
+        }
+
+        private void reload()
+        {
+            if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
             {
-                this.lOPTableAdapter.Fill(this.dS.LOP);
+                bdsDsLop.CancelEdit();
+
+                if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
+                gcLop.Enabled = true;
+                groupBox1.Enabled = false;
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+                btnGhi.Enabled = btnPhucHoi.Enabled = false;
 
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show("Lỗi Reload :" + ex.Message, "", MessageBoxButtons.OK);
-                return;
+                try
+                {
+                    this.lOPTableAdapter.Fill(this.dS.LOP);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi Reload :" + ex.Message, "", MessageBoxButtons.OK);
+                    return;
+                }
             }
+
         }
 
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            //if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
-            //{
-            //    bdsDsLop.CancelEdit();
-            //    if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
-            //    gcLop.Enabled = true;
-            //    groupBox1.Enabled = false;
-            //    btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
-            //    btnGhi.Enabled = btnPhucHoi.Enabled = false;
-            //}
-            //else
-            //{
+            if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
+            {
+                bdsDsLop.CancelEdit();
+                this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
+
+                if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
+                gcLop.Enabled = true;
+                groupBox1.Enabled = false;
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+                btnGhi.Enabled = btnPhucHoi.Enabled = false;
+
+                reload();
+            }
+            else
+            {
+
                 if (st.Count == 0)
                     return;
 
-                ObjectUndo ob = (ObjectUndo)st.Pop();
-                if (ob.getType() == THEM)
+                ObjectUndo objUndo = (ObjectUndo)st.Pop();
+                Object obj = objUndo.obj;
+                switch (objUndo.type)
                 {
-                    MessageBox.Show("Khôi phục sau khi thêm " + ob.getLenh());
-                    Program.ExecSqlDataReader(ob.getLenh());
-                    this.lOPTableAdapter.Fill(this.dS.LOP);
-                    if (st.Count == 0)
-                    {
-                        btnPhucHoi.Enabled = false;
-                        //MessageBox.Show("Không có gì để Phục hồi", "THÔNG BÁO", MessageBoxButtons.OK);
-                        return;
-                    }
-                }
+                    case THEM:
+                        MessageBox.Show("Khôi phục sau khi thêm");
 
-            //}
+                        String lenh = "";
+
+                        try
+                        {
+                            lenh = obj.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                        Program.ExecSqlDataReader(lenh);
+                        this.lOPTableAdapter.Fill(this.dS.LOP);
+                        updateUIButtonPhucHoi();
+
+                        break;
+
+                    case HIEU_CHINH:
+                        MessageBox.Show("Khôi phục sau khi hiệu chỉnh");
+                        try
+                        {
+                            Lop lopHieuChinh = (Lop)objUndo.obj;
+                            MessageBox.Show(lopHieuChinh.tenLop);
+
+                            if (Program.conn.State == ConnectionState.Closed)
+                                Program.conn.Open();
+                            String strLenh = "dbo.sp_UndoHieuChinh";
+                            Program.sqlcmd = Program.conn.CreateCommand();
+                            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                            Program.sqlcmd.CommandText = strLenh;
+                            Program.sqlcmd.Parameters.Add("@maLop", SqlDbType.Text).Value = lopHieuChinh.maLop;
+                            Program.sqlcmd.Parameters.Add("@tenLop", SqlDbType.Text).Value = lopHieuChinh.tenLop;
+
+                            Program.sqlcmd.ExecuteNonQuery();
+                            Program.conn.Close();
+
+                            reload();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                        break;
+
+                    case XOA:
+                        MessageBox.Show("Khôi phục sau khi xóa");
+                        try
+                        {
+                            Lop lopXoa = (Lop)objUndo.obj;
+
+                            if (Program.conn.State == ConnectionState.Closed)
+                                Program.conn.Open();
+                            String strLenh = "dbo.sp_InsertLop";
+                            Program.sqlcmd = Program.conn.CreateCommand();
+                            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                            Program.sqlcmd.CommandText = strLenh;
+                            Program.sqlcmd.Parameters.Add("@maLop", SqlDbType.Text).Value = lopXoa.maLop;
+                            Program.sqlcmd.Parameters.Add("@tenLop", SqlDbType.Text).Value = lopXoa.tenLop;
+                            Program.sqlcmd.Parameters.Add("@maKH", SqlDbType.Text).Value = maKhoa;
+
+                            Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                            Program.sqlcmd.ExecuteNonQuery();
+                            Program.conn.Close();
+                            String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+                            if (Ret == "1")
+                                MessageBox.Show("Undo success");
+                            else
+                                MessageBox.Show("Undo failed");
+
+                            reload();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+
+                }
+            }
         }
 
         private void updateUIButtonPhucHoi()
@@ -367,5 +492,36 @@ namespace QuanLyDiemSinhVien
                 btnPhucHoi.Enabled = true;
         }
 
+        private void btnExit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.Close();
+        }
+
+    }
+
+    public class Lop
+    {
+        public String maLop;
+        public String tenLop;
+        public String maKhoa;
+
+        public Lop(String maLop, String tenLop, String maKhoa)
+        {
+            this.maLop = maLop;
+            this.maKhoa = maKhoa;
+            this.tenLop = tenLop;
+        }
+    }
+
+    public class ObjectUndo
+    {
+        public int type;
+        public Object obj;
+
+        public ObjectUndo(int type, Object obj)
+        {
+            this.type = type;
+            this.obj = obj;
+        }
     }
 }
