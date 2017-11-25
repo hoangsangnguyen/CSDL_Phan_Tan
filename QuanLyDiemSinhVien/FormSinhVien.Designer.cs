@@ -111,6 +111,78 @@
             this.panelDetail.SuspendLayout();
             this.SuspendLayout();
             // 
+            // mASVLabel
+            // 
+            mASVLabel.AutoSize = true;
+            mASVLabel.Location = new System.Drawing.Point(31, 18);
+            mASVLabel.Name = "mASVLabel";
+            mASVLabel.Size = new System.Drawing.Size(56, 19);
+            mASVLabel.TabIndex = 0;
+            mASVLabel.Text = "MASV:";
+            // 
+            // hOLabel
+            // 
+            hOLabel.AutoSize = true;
+            hOLabel.Location = new System.Drawing.Point(31, 64);
+            hOLabel.Name = "hOLabel";
+            hOLabel.Size = new System.Drawing.Size(35, 19);
+            hOLabel.TabIndex = 2;
+            hOLabel.Text = "HO:";
+            // 
+            // tENLabel
+            // 
+            tENLabel.AutoSize = true;
+            tENLabel.Location = new System.Drawing.Point(31, 114);
+            tENLabel.Name = "tENLabel";
+            tENLabel.Size = new System.Drawing.Size(42, 19);
+            tENLabel.TabIndex = 4;
+            tENLabel.Text = "TEN:";
+            // 
+            // pHAILabel
+            // 
+            pHAILabel.AutoSize = true;
+            pHAILabel.Location = new System.Drawing.Point(290, 18);
+            pHAILabel.Name = "pHAILabel";
+            pHAILabel.Size = new System.Drawing.Size(48, 19);
+            pHAILabel.TabIndex = 6;
+            pHAILabel.Text = "PHAI:";
+            // 
+            // nGAYSINHLabel
+            // 
+            nGAYSINHLabel.AutoSize = true;
+            nGAYSINHLabel.Location = new System.Drawing.Point(290, 64);
+            nGAYSINHLabel.Name = "nGAYSINHLabel";
+            nGAYSINHLabel.Size = new System.Drawing.Size(93, 19);
+            nGAYSINHLabel.TabIndex = 8;
+            nGAYSINHLabel.Text = "NGAYSINH:";
+            // 
+            // nOISINHLabel
+            // 
+            nOISINHLabel.AutoSize = true;
+            nOISINHLabel.Location = new System.Drawing.Point(290, 114);
+            nOISINHLabel.Name = "nOISINHLabel";
+            nOISINHLabel.Size = new System.Drawing.Size(78, 19);
+            nOISINHLabel.TabIndex = 10;
+            nOISINHLabel.Text = "NOISINH:";
+            // 
+            // dIACHILabel
+            // 
+            dIACHILabel.AutoSize = true;
+            dIACHILabel.Location = new System.Drawing.Point(570, 22);
+            dIACHILabel.Name = "dIACHILabel";
+            dIACHILabel.Size = new System.Drawing.Size(66, 19);
+            dIACHILabel.TabIndex = 12;
+            dIACHILabel.Text = "DIACHI:";
+            // 
+            // nGHIHOCLabel
+            // 
+            nGHIHOCLabel.AutoSize = true;
+            nGHIHOCLabel.Location = new System.Drawing.Point(570, 66);
+            nGHIHOCLabel.Name = "nGHIHOCLabel";
+            nGHIHOCLabel.Size = new System.Drawing.Size(85, 19);
+            nGHIHOCLabel.TabIndex = 14;
+            nGHIHOCLabel.Text = "NGHIHOC:";
+            // 
             // bar2
             // 
             this.bar2.BarName = "Main menu";
@@ -181,6 +253,7 @@
             this.btnHieuChinh.Id = 2;
             this.btnHieuChinh.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Text_Edit_icon_24;
             this.btnHieuChinh.Name = "btnHieuChinh";
+            this.btnHieuChinh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnHieuChinh_ItemClick);
             // 
             // btnXoa
             // 
@@ -338,6 +411,7 @@
             this.tableAdapterManager.LOPTableAdapter = null;
             this.tableAdapterManager.MONHOCTableAdapter = null;
             this.tableAdapterManager.SINHVIENTableAdapter = null;
+            this.tableAdapterManager.sp_LayDsSinhVienTheoLopTableAdapter = null;
             this.tableAdapterManager.UpdateOrder = QuanLyDiemSinhVien.DSTableAdapters.TableAdapterManager.UpdateOrderOption.InsertUpdateDelete;
             // 
             // gcSinhVien
@@ -453,15 +527,6 @@
             this.txtMaSV.Size = new System.Drawing.Size(124, 20);
             this.txtMaSV.TabIndex = 1;
             // 
-            // mASVLabel
-            // 
-            mASVLabel.AutoSize = true;
-            mASVLabel.Location = new System.Drawing.Point(31, 18);
-            mASVLabel.Name = "mASVLabel";
-            mASVLabel.Size = new System.Drawing.Size(56, 19);
-            mASVLabel.TabIndex = 0;
-            mASVLabel.Text = "MASV:";
-            // 
             // txtHoSV
             // 
             this.txtHoSV.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.DsSinhVienTheoLopBindingSource, "HO", true));
@@ -470,15 +535,6 @@
             this.txtHoSV.Name = "txtHoSV";
             this.txtHoSV.Size = new System.Drawing.Size(124, 20);
             this.txtHoSV.TabIndex = 3;
-            // 
-            // hOLabel
-            // 
-            hOLabel.AutoSize = true;
-            hOLabel.Location = new System.Drawing.Point(31, 64);
-            hOLabel.Name = "hOLabel";
-            hOLabel.Size = new System.Drawing.Size(35, 19);
-            hOLabel.TabIndex = 2;
-            hOLabel.Text = "HO:";
             // 
             // txtTenSV
             // 
@@ -489,15 +545,6 @@
             this.txtTenSV.Size = new System.Drawing.Size(124, 20);
             this.txtTenSV.TabIndex = 5;
             // 
-            // tENLabel
-            // 
-            tENLabel.AutoSize = true;
-            tENLabel.Location = new System.Drawing.Point(31, 114);
-            tENLabel.Name = "tENLabel";
-            tENLabel.Size = new System.Drawing.Size(42, 19);
-            tENLabel.TabIndex = 4;
-            tENLabel.Text = "TEN:";
-            // 
             // checkPhaiSV
             // 
             this.checkPhaiSV.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.DsSinhVienTheoLopBindingSource, "PHAI", true));
@@ -507,15 +554,6 @@
             this.checkPhaiSV.Properties.Caption = "Nam";
             this.checkPhaiSV.Size = new System.Drawing.Size(100, 19);
             this.checkPhaiSV.TabIndex = 7;
-            // 
-            // pHAILabel
-            // 
-            pHAILabel.AutoSize = true;
-            pHAILabel.Location = new System.Drawing.Point(290, 18);
-            pHAILabel.Name = "pHAILabel";
-            pHAILabel.Size = new System.Drawing.Size(48, 19);
-            pHAILabel.TabIndex = 6;
-            pHAILabel.Text = "PHAI:";
             // 
             // txtNgaySinhSV
             // 
@@ -531,15 +569,6 @@
             this.txtNgaySinhSV.Size = new System.Drawing.Size(100, 20);
             this.txtNgaySinhSV.TabIndex = 9;
             // 
-            // nGAYSINHLabel
-            // 
-            nGAYSINHLabel.AutoSize = true;
-            nGAYSINHLabel.Location = new System.Drawing.Point(290, 64);
-            nGAYSINHLabel.Name = "nGAYSINHLabel";
-            nGAYSINHLabel.Size = new System.Drawing.Size(93, 19);
-            nGAYSINHLabel.TabIndex = 8;
-            nGAYSINHLabel.Text = "NGAYSINH:";
-            // 
             // txtNoiSinhSV
             // 
             this.txtNoiSinhSV.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.DsSinhVienTheoLopBindingSource, "NOISINH", true));
@@ -548,15 +577,6 @@
             this.txtNoiSinhSV.Name = "txtNoiSinhSV";
             this.txtNoiSinhSV.Size = new System.Drawing.Size(100, 20);
             this.txtNoiSinhSV.TabIndex = 11;
-            // 
-            // nOISINHLabel
-            // 
-            nOISINHLabel.AutoSize = true;
-            nOISINHLabel.Location = new System.Drawing.Point(290, 114);
-            nOISINHLabel.Name = "nOISINHLabel";
-            nOISINHLabel.Size = new System.Drawing.Size(78, 19);
-            nOISINHLabel.TabIndex = 10;
-            nOISINHLabel.Text = "NOISINH:";
             // 
             // txtDiaChiSV
             // 
@@ -567,15 +587,6 @@
             this.txtDiaChiSV.Size = new System.Drawing.Size(182, 20);
             this.txtDiaChiSV.TabIndex = 13;
             // 
-            // dIACHILabel
-            // 
-            dIACHILabel.AutoSize = true;
-            dIACHILabel.Location = new System.Drawing.Point(570, 22);
-            dIACHILabel.Name = "dIACHILabel";
-            dIACHILabel.Size = new System.Drawing.Size(66, 19);
-            dIACHILabel.TabIndex = 12;
-            dIACHILabel.Text = "DIACHI:";
-            // 
             // checkNghiHoc
             // 
             this.checkNghiHoc.DataBindings.Add(new System.Windows.Forms.Binding("EditValue", this.DsSinhVienTheoLopBindingSource, "NGHIHOC", true));
@@ -585,15 +596,6 @@
             this.checkNghiHoc.Properties.Caption = "";
             this.checkNghiHoc.Size = new System.Drawing.Size(75, 19);
             this.checkNghiHoc.TabIndex = 15;
-            // 
-            // nGHIHOCLabel
-            // 
-            nGHIHOCLabel.AutoSize = true;
-            nGHIHOCLabel.Location = new System.Drawing.Point(570, 66);
-            nGHIHOCLabel.Name = "nGHIHOCLabel";
-            nGHIHOCLabel.Size = new System.Drawing.Size(85, 19);
-            nGHIHOCLabel.TabIndex = 14;
-            nGHIHOCLabel.Text = "NGHIHOC:";
             // 
             // panelDetail
             // 

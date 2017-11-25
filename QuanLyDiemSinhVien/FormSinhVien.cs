@@ -131,6 +131,26 @@ namespace QuanLyDiemSinhVien
             cmbKhoaSV.Enabled = cmbLop.Enabled = false;
         }
 
+
+        private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            vitri = DsSinhVienTheoLopBindingSource.Position;
+            panelDetail.Enabled = true;
+            btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = false;
+            btnGhi.Enabled = btnPhucHoi.Enabled = true;
+            txtMaSV.Enabled = false;
+            txtHoSV.Focus();
+            gcSinhVien.Enabled = false;
+            choose = HIEU_CHINH;
+
+            // lưu stack cho undo
+            //Lop lop = new Lop(txtMaLop.Text, txtTenLop.Text, txtMaKhoa.Text);
+            //ObjectUndo obj = new ObjectUndo(HIEU_CHINH, lop);
+            //st.Push(obj);
+
+            // updateUIButtonPhucHoi();
+        }
+
         private void btnGhi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             switch (choose)
@@ -171,7 +191,7 @@ namespace QuanLyDiemSinhVien
                                                                         txtDiaChiSV.Text.Trim(),
                                                                         checkNghiHoc.Checked);
 
-                            MessageBox.Show("Thêm lớp thành công", "", MessageBoxButtons.OK);
+                            MessageBox.Show("Thêm sinh viên thành công", "", MessageBoxButtons.OK);
 
                             //String lenh = "exec sp_UndoThemLop '" + txtMaSV.Text + "'";
                             //ObjectUndo obj = new ObjectUndo(THEM, lenh);
@@ -181,15 +201,62 @@ namespace QuanLyDiemSinhVien
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Lỗi ghi nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                            MessageBox.Show("Lỗi ghi sinh viên.\n" + ex.Message, "", MessageBoxButtons.OK);
                             return;
                         }
                     }
+
+                    else
+                    {
+                        return;
+                    }
+
+                    gcSinhVien.Enabled = true;
+                    btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = true;
+                    btnGhi.Enabled = false;
+
+                    panelDetail.Enabled = false;
 
 
                     break;
 
                 case HIEU_CHINH:
+                    if (checkAvailabelInfo())
+                    {
+                        try
+                        {
+                            DsSinhVienTheoLopBindingSource.EndEdit();
+                            DsSinhVienTheoLopBindingSource.ResetCurrentItem();
+                            this.DsSinhVienTheoLopTableAdapter.Connection.ConnectionString = Program.connstr;
+                            this.DsSinhVienTheoLopTableAdapter.Update(txtMaSV.Text.Trim(),
+                                                                            txtHoSV.Text.Trim(),
+                                                                            txtTenSV.Text.Trim(),
+                                                                            checkPhaiSV.Checked,
+                                                                            convertStringToDateTime(txtNgaySinhSV.Text),
+                                                                            txtNoiSinhSV.Text.Trim(),
+                                                                            txtDiaChiSV.Text.Trim(),
+                                                                            checkNghiHoc.Checked);
+
+                            MessageBox.Show("Update thành công", "", MessageBoxButtons.OK);
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Lỗi hiệu chỉnh sinh viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        return;
+                    }
+
+                    gcSinhVien.Enabled = true;
+                    btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = true;
+                    btnGhi.Enabled = false;
+
+                    panelDetail.Enabled = false;
+
                     break;
 
 
@@ -200,42 +267,42 @@ namespace QuanLyDiemSinhVien
         {
             if (txtMaSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Mã Sinh viên không được thiếu!", "", MessageBoxButtons.OK);
                 txtMaSV.Focus();
                 return false;
             }
 
             if (txtHoSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Họ sinh viên không được thiếu!", "", MessageBoxButtons.OK);
                 txtHoSV.Focus();
                 return false;
             }
 
             if (txtTenSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Tên sinh viên không được thiếu!", "", MessageBoxButtons.OK);
                 txtTenSV.Focus();
                 return false;
             }
 
             if (txtNgaySinhSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Ngày sinh không được thiếu!", "", MessageBoxButtons.OK);
                 txtNgaySinhSV.Focus();
                 return false;
             }
 
             if (txtNoiSinhSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Nơi sinh không được thiếu!", "", MessageBoxButtons.OK);
                 txtNoiSinhSV.Focus();
                 return false;
             }
 
             if (txtDiaChiSV.Text.Trim() == "")
             {
-                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                MessageBox.Show("Địa chỉ không được thiếu!", "", MessageBoxButtons.OK);
                 txtDiaChiSV.Focus();
                 return false;
             }
@@ -248,5 +315,6 @@ namespace QuanLyDiemSinhVien
             return DateTime.ParseExact(s, "MM/dd/yyyy",
                                        System.Globalization.CultureInfo.InvariantCulture);
         }
+
     }
 }
