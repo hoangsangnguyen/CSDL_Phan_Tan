@@ -83,6 +83,12 @@
     <Compile Include="formDangNhap.Designer.cs">
       <DependentUpon>formDangNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMonHoc.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMonHoc.Designer.cs">
+      <DependentUpon>FormMonHoc.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSinhVien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -104,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="formMain.resx">
       <DependentUpon>formMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMonHoc.resx">
+      <DependentUpon>FormMonHoc.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormSinhVien.resx">
       <DependentUpon>FormSinhVien.cs</DependentUpon>
@@ -195,6 +204,36 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Actions-list-add-user-icon-24.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\folder-flower-blue-CVDI-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Add-24-icon1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Text-Edit-icon-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Text-Edit-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Delete-2-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Save-icon-242.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Undo-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Button-Refresh-icon-241.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Exit-24-icon1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
