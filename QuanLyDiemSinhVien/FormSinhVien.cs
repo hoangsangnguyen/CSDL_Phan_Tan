@@ -212,6 +212,11 @@ namespace QuanLyDiemSinhVien
 
                     gcSinhVien.Enabled = true;
                     btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = true;
+                    cmbLop.Enabled = true;
+                    if (Program.mGroup == "PGV")
+                        cmbKhoaSV.Enabled = true;  // bật tắt theo phân quyền
+                    else
+                        cmbKhoaSV.Enabled = false;
                     btnGhi.Enabled = false;
 
                     panelDetail.Enabled = false;
@@ -333,7 +338,7 @@ namespace QuanLyDiemSinhVien
                 Program.conn.Close();
                 return;
             }
-          
+
             String maLop = "";
 
             if (MessageBox.Show("Bạn có thật sự muốn xóa nhân viên này ?? ", "Xác nhận",
