@@ -262,6 +262,7 @@
             this.btnXoa.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Delete_2_icon_24;
             this.btnXoa.ImageOptions.LargeImage = global::QuanLyDiemSinhVien.Properties.Resources.Delete_2_icon_24;
             this.btnXoa.Name = "btnXoa";
+            this.btnXoa.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnXoa_ItemClick);
             // 
             // btnGhi
             // 

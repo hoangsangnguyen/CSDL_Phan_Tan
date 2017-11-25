@@ -131,7 +131,6 @@ namespace QuanLyDiemSinhVien
             cmbKhoaSV.Enabled = cmbLop.Enabled = false;
         }
 
-
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             vitri = DsSinhVienTheoLopBindingSource.Position;
@@ -316,5 +315,61 @@ namespace QuanLyDiemSinhVien
                                        System.Globalization.CultureInfo.InvariantCulture);
         }
 
+        private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (Program.conn.State == ConnectionState.Closed)
+                Program.conn.Open();
+            String strLenh = "dbo.sp_KiemTraMaSV";
+            Program.sqlcmd = Program.conn.CreateCommand();
+            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+            Program.sqlcmd.CommandText = strLenh;
+            Program.sqlcmd.Parameters.Add("@MASV", SqlDbType.Text).Value = txtMaSV.Text.Trim();
+            Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+            Program.sqlcmd.ExecuteNonQuery();
+            String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+            if (Ret == "0")
+            {
+                MessageBox.Show("Mã sinh viên không tồn tại", "", MessageBoxButtons.OK);
+                Program.conn.Close();
+                return;
+            }
+          
+            String maLop = "";
+
+            if (MessageBox.Show("Bạn có thật sự muốn xóa nhân viên này ?? ", "Xác nhận",
+                       MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                try
+                {
+                    //DataRowView dataRow = (DataRowView)bdsDsLop[bdsDsLop.Position];
+                    //maLop = dataRow["MALOP"].ToString(); // giữ lại để khi xóa bij lỗi thì ta sẽ quay về lại
+                    //String tenLop = dataRow["TENLOP"].ToString();
+                    //String maKhoa = dataRow["MAKH"].ToString();
+                    //Lop lopRemove = new Lop(maLop, tenLop, maKhoa);
+                    //ObjectUndo obj = new ObjectUndo(XOA, lopRemove);
+
+                    this.DsSinhVienTheoLopTableAdapter.Connection.ConnectionString = Program.connstr;
+                    int result = this.DsSinhVienTheoLopTableAdapter.Delete(txtMaSV.Text.Trim());
+                    if (result == 1)
+                        MessageBox.Show("Xóa sinh viên thành công", "", MessageBoxButtons.OK);
+                    else
+                        MessageBox.Show("Xóa sinh viên bị lỗi", "", MessageBoxButtons.OK);
+
+                    reload();
+                    //st.Push(obj);
+                    //updateUIButtonPhucHoi();
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi xóa sinh viên. Bạn hãy xóa lại\n" + ex.Message, "",
+                        MessageBoxButtons.OK);
+                    initSinhVienList();
+                    DsSinhVienTheoLopBindingSource.Position = DsSinhVienTheoLopBindingSource.Find("MASV", txtMaSV.Text.Trim());
+                    return;
+                }
+            }
+
+        }
     }
 }
