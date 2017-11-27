@@ -278,6 +278,7 @@
             this.btnPhucHoi.Id = 5;
             this.btnPhucHoi.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Undo_icon_24;
             this.btnPhucHoi.Name = "btnPhucHoi";
+            this.btnPhucHoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPhucHoi_ItemClick);
             // 
             // btnReload
             // 

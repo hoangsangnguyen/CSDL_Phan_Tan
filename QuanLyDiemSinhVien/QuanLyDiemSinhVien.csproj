@@ -55,6 +55,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DS.cs">
+      <DependentUpon>DS.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="DS.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
