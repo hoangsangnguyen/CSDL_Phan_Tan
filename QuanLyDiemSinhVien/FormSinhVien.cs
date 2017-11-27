@@ -18,6 +18,7 @@ namespace QuanLyDiemSinhVien
         const int XOA = 2;
 
         int vitri = 0;
+        int vitriLop = 0;
 
         public FormSinhVien()
         {
@@ -121,6 +122,8 @@ namespace QuanLyDiemSinhVien
             vitri = DsSinhVienTheoLopBindingSource.Position;
             panelDetail.Enabled = true;
             DsSinhVienTheoLopBindingSource.AddNew();
+            checkPhaiSV.Checked = false;
+            checkNghiHoc.Checked = false;
 
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = false;
             btnGhi.Enabled = btnReload.Enabled = true;
@@ -183,15 +186,19 @@ namespace QuanLyDiemSinhVien
                             this.DsSinhVienTheoLopTableAdapter.Insert(txtMaSV.Text.Trim(),
                                                                         txtHoSV.Text.Trim(),
                                                                         txtTenSV.Text.Trim(),
-                                                                        cmbLop.SelectedValue.ToString().Trim(),
+                                                                        cmbLop.SelectedValue.ToString(),
                                                                         checkPhaiSV.Checked,
-                                                                        convertStringToDateTime(txtNgaySinhSV.Text),
+                                                                        Program.convertStringToDateTime(txtNgaySinhSV.Text),
                                                                         txtNoiSinhSV.Text.Trim(),
                                                                         txtDiaChiSV.Text.Trim(),
                                                                         checkNghiHoc.Checked);
 
+                            vitriLop = cmbLop.SelectedIndex;
+                            reload();
+                            cmbLop.SelectedIndex = vitriLop;
+                            
                             MessageBox.Show("Thêm sinh viên thành công", "", MessageBoxButtons.OK);
-
+                            
                             //String lenh = "exec sp_UndoThemLop '" + txtMaSV.Text + "'";
                             //ObjectUndo obj = new ObjectUndo(THEM, lenh);
                             //st.Push(obj);
@@ -236,7 +243,7 @@ namespace QuanLyDiemSinhVien
                                                                             txtHoSV.Text.Trim(),
                                                                             txtTenSV.Text.Trim(),
                                                                             checkPhaiSV.Checked,
-                                                                            convertStringToDateTime(txtNgaySinhSV.Text),
+                                                                            Program.convertStringToDateTime(txtNgaySinhSV.Text),
                                                                             txtNoiSinhSV.Text.Trim(),
                                                                             txtDiaChiSV.Text.Trim(),
                                                                             checkNghiHoc.Checked);
@@ -314,12 +321,6 @@ namespace QuanLyDiemSinhVien
             return true;
         }
 
-        private DateTime convertStringToDateTime(String s)
-        {
-            return DateTime.ParseExact(s, "MM/dd/yyyy",
-                                       System.Globalization.CultureInfo.InvariantCulture);
-        }
-
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (Program.conn.State == ConnectionState.Closed)
@@ -360,7 +361,9 @@ namespace QuanLyDiemSinhVien
                     else
                         MessageBox.Show("Xóa sinh viên bị lỗi", "", MessageBoxButtons.OK);
 
+                    vitriLop = cmbLop.SelectedIndex;
                     reload();
+                    cmbLop.SelectedIndex = vitriLop;
                     //st.Push(obj);
                     //updateUIButtonPhucHoi();
 
