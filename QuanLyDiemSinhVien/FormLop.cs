@@ -17,10 +17,7 @@ namespace QuanLyDiemSinhVien
         public Stack st = new Stack();
 
         int choose = 0;
-        const int THEM = 0;
-        const int HIEU_CHINH = 1;
-        const int XOA = 2;
-
+       
         int vitri = 0;
         string maKhoa = "";
 
@@ -104,7 +101,7 @@ namespace QuanLyDiemSinhVien
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnGhi.Enabled = btnReload.Enabled = true;
             gcLop.Enabled = false;
-            choose = THEM;
+            choose = Program.THEM;
             btnPhucHoi.Enabled = true;
         }
 
@@ -112,7 +109,7 @@ namespace QuanLyDiemSinhVien
         {
             switch (choose)
             {
-                case THEM:
+                case Program.THEM:
                     if (txtMaLop.Text.Trim() == "")
                     {
                         MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
@@ -170,7 +167,7 @@ namespace QuanLyDiemSinhVien
                         MessageBox.Show("Thêm lớp thành công", "", MessageBoxButtons.OK);
 
                         String lenh = "exec sp_UndoThemLop '" + txtMaLop.Text + "'";
-                        ObjectUndo obj = new ObjectUndo(THEM, lenh);
+                        Program.ObjectUndo obj = new Program.ObjectUndo(Program.THEM, lenh);
                         st.Push(obj);
                         updateUIButtonPhucHoi();
 
@@ -187,7 +184,7 @@ namespace QuanLyDiemSinhVien
                     groupBox1.Enabled = false;
                     break;
 
-                case HIEU_CHINH:
+                case Program.HIEU_CHINH:
                     String tenLop = ((DataRowView)bdsDsLop[vitri])["TENLOP"].ToString().Trim();
                     if (txtTenLop.Text.Trim().Equals(tenLop))
                     {
@@ -265,11 +262,11 @@ namespace QuanLyDiemSinhVien
             txtMaLop.Enabled = txtMaKhoa.Enabled = false;
             txtTenLop.Focus();
             gcLop.Enabled = false;
-            choose = HIEU_CHINH;
+            choose = Program.HIEU_CHINH;
 
             // lưu stack cho undo
             Lop lop = new Lop(txtMaLop.Text, txtTenLop.Text, txtMaKhoa.Text);
-            ObjectUndo obj = new ObjectUndo(HIEU_CHINH, lop);
+            Program.ObjectUndo obj = new Program.ObjectUndo(Program.HIEU_CHINH, lop);
             st.Push(obj);
 
             updateUIButtonPhucHoi();
@@ -317,7 +314,7 @@ namespace QuanLyDiemSinhVien
                     String tenLop = dataRow["TENLOP"].ToString();
                     String maKhoa = dataRow["MAKH"].ToString();
                     Lop lopRemove = new Lop(maLop, tenLop, maKhoa);
-                    ObjectUndo obj = new ObjectUndo(XOA, lopRemove);
+                    Program.ObjectUndo obj = new Program.ObjectUndo(Program.XOA, lopRemove);
 
                     bdsDsLop.RemoveCurrent();
                     this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
@@ -394,11 +391,11 @@ namespace QuanLyDiemSinhVien
                 if (st.Count == 0)
                     return;
 
-                ObjectUndo objUndo = (ObjectUndo)st.Pop();
+                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Pop();
                 Object obj = objUndo.obj;
                 switch (objUndo.type)
                 {
-                    case THEM:
+                    case Program.THEM:
                         MessageBox.Show("Khôi phục sau khi thêm");
 
                         String lenh = "";
@@ -418,7 +415,7 @@ namespace QuanLyDiemSinhVien
 
                         break;
 
-                    case HIEU_CHINH:
+                    case Program.HIEU_CHINH:
                         MessageBox.Show("Khôi phục sau khi hiệu chỉnh");
                         try
                         {
@@ -446,7 +443,7 @@ namespace QuanLyDiemSinhVien
 
                         break;
 
-                    case XOA:
+                    case Program.XOA:
                         MessageBox.Show("Khôi phục sau khi xóa");
                         try
                         {
@@ -513,15 +510,5 @@ namespace QuanLyDiemSinhVien
         }
     }
 
-    public class ObjectUndo
-    {
-        public int type;
-        public Object obj;
-
-        public ObjectUndo(int type, Object obj)
-        {
-            this.type = type;
-            this.obj = obj;
-        }
-    }
+  
 }
