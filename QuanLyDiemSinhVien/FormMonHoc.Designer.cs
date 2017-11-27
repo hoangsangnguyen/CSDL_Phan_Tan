@@ -28,8 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
+            this.barManager1 = new DevExpress.XtraBars.BarManager();
             this.bar1 = new DevExpress.XtraBars.Bar();
             this.btnThem = new DevExpress.XtraBars.BarButtonItem();
             this.btnHieuChinh = new DevExpress.XtraBars.BarButtonItem();
@@ -43,7 +42,7 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.dS = new QuanLyDiemSinhVien.DS();
-            this.mONHOCBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.mONHOCBindingSource = new System.Windows.Forms.BindingSource();
             this.mONHOCTableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.MONHOCTableAdapter();
             this.tableAdapterManager = new QuanLyDiemSinhVien.DSTableAdapters.TableAdapterManager();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -141,6 +140,7 @@
             this.btnPhucHoi.Id = 4;
             this.btnPhucHoi.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Undo_icon_241;
             this.btnPhucHoi.Name = "btnPhucHoi";
+            this.btnPhucHoi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnPhucHoi_ItemClick);
             // 
             // btnReload
             // 

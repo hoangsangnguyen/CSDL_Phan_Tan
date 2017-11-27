@@ -129,8 +129,8 @@ namespace QuanLyDiemSinhVien
                         this.mONHOCTableAdapter.Update(this.dS.MONHOC);
                         MessageBox.Show("Thêm lớp thành công", "", MessageBoxButtons.OK);
 
-                        String lenh = "exec sp_UndoThemLop '" + txtMaMH.Text + "'";
-                        ObjectUndo obj = new ObjectUndo(Program.THEM, lenh);
+                        String lenh = "exec sp_UndoThemMonHoc '" + txtMaMH.Text + "'";
+                        Program.ObjectUndo obj = new Program.ObjectUndo(Program.THEM, lenh);
                         st.Push(obj);
                         updateUIButtonPhucHoi();
 
@@ -227,7 +227,7 @@ namespace QuanLyDiemSinhVien
 
             // lưu stack cho undo
             MonHoc mh = new MonHoc(txtMaMH.Text, txtTenMH.Text);
-            ObjectUndo obj = new ObjectUndo(Program.HIEU_CHINH, mh);
+            Program.ObjectUndo obj = new Program.ObjectUndo(Program.HIEU_CHINH, mh);
 
             st.Push(obj);
 
@@ -278,7 +278,7 @@ namespace QuanLyDiemSinhVien
                     maMH = dataRow["MAMH"].ToString(); // giữ lại để khi xóa bij lỗi thì ta sẽ quay về lại
                     String tenMH = dataRow["TENMH"].ToString();
                     MonHoc mhRemove = new MonHoc(maMH, tenMH);
-                    ObjectUndo obj = new ObjectUndo(Program.XOA, mhRemove);
+                    Program.ObjectUndo obj = new Program.ObjectUndo(Program.XOA, mhRemove);
 
                     mONHOCBindingSource.RemoveCurrent();
                     this.mONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
@@ -336,6 +336,116 @@ namespace QuanLyDiemSinhVien
                 }
             }
 
+        }
+
+        private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
+            {
+                mONHOCBindingSource.CancelEdit();
+                this.mONHOCTableAdapter.Connection.ConnectionString = Program.connstr;
+
+                if (btnThem.Enabled == false) mONHOCBindingSource.Position = vitri;
+                gcMonHoc.Enabled = true;
+                groupBox1.Enabled = false;
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+                btnGhi.Enabled = btnPhucHoi.Enabled = false;
+
+                reload();
+            }
+            else
+            {
+
+                if (st.Count == 0)
+                    return;
+
+                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Pop();
+                Object obj = objUndo.obj;
+                switch (objUndo.type)
+                {
+                    case Program.THEM:
+                        MessageBox.Show("Khôi phục sau khi thêm");
+
+                        String lenh = "";
+
+                        try
+                        {
+                            lenh = obj.ToString();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                        Program.ExecSqlDataReader(lenh);
+                        this.mONHOCTableAdapter.Fill(this.dS.MONHOC);
+                        updateUIButtonPhucHoi();
+
+                        break;
+
+                    case Program.HIEU_CHINH:
+                        MessageBox.Show("Khôi phục sau khi hiệu chỉnh");
+                        try
+                        {
+                            MonHoc mhChinh = (MonHoc)objUndo.obj;
+                            MessageBox.Show(mhChinh.tenMonHoc);
+
+                            if (Program.conn.State == ConnectionState.Closed)
+                                Program.conn.Open();
+                            String strLenh = "dbo.sp_UndoHieuChinh";
+                            Program.sqlcmd = Program.conn.CreateCommand();
+                            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                            Program.sqlcmd.CommandText = strLenh;
+                            Program.sqlcmd.Parameters.Add("@MAMH", SqlDbType.Text).Value = mhChinh.maMonHoc;
+                            Program.sqlcmd.Parameters.Add("@TENMH", SqlDbType.Text).Value = convertStringToUTF8(mhChinh.tenMonHoc);
+
+                            Program.sqlcmd.ExecuteNonQuery();
+                            Program.conn.Close();
+
+                            reload();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+
+                        break;
+
+                    case Program.XOA:
+                        MessageBox.Show("Khôi phục sau khi xóa");
+                        try
+                        {
+                            MonHoc mhXoa = (MonHoc)objUndo.obj;
+
+                            if (Program.conn.State == ConnectionState.Closed)
+                                Program.conn.Open();
+                            String strLenh = "dbo.sp_InsertMonHoc";
+                            Program.sqlcmd = Program.conn.CreateCommand();
+                            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                            Program.sqlcmd.CommandText = strLenh;
+                            Program.sqlcmd.Parameters.Add("@MAMH", SqlDbType.Text).Value = mhXoa.maMonHoc;
+                            Program.sqlcmd.Parameters.Add("@TENMH", SqlDbType.Text).Value =convertStringToUTF8( mhXoa.tenMonHoc);
+
+                            Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                            Program.sqlcmd.ExecuteNonQuery();
+                            Program.conn.Close();
+                            String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+                            if (Ret == "1")
+                                MessageBox.Show("Undo success");
+                            else
+                                MessageBox.Show("Undo failed");
+
+                            reload();
+
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                        }
+                        break;
+
+                }
+            }
         }
 
     }
