@@ -392,7 +392,7 @@ namespace QuanLyDiemSinhVien
 
                             if (Program.conn.State == ConnectionState.Closed)
                                 Program.conn.Open();
-                            String strLenh = "dbo.sp_UndoHieuChinh";
+                            String strLenh = "dbo.sp_UndoHieuChinhMonHoc";
                             Program.sqlcmd = Program.conn.CreateCommand();
                             Program.sqlcmd.CommandType = CommandType.StoredProcedure;
                             Program.sqlcmd.CommandText = strLenh;
