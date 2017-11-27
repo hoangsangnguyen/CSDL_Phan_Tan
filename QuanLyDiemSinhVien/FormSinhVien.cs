@@ -116,8 +116,13 @@ namespace QuanLyDiemSinhVien
 
         private void reload()
         {
+            vitriLop = cmbLop.SelectedIndex;
+            int viTriKhoa = cmbKhoaSV.SelectedIndex;
             initComboboxLop();
             initSinhVienList();
+
+            cmbKhoaSV.SelectedIndex = viTriKhoa;
+            cmbLop.SelectedIndex = vitriLop;
         }
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -204,7 +209,7 @@ namespace QuanLyDiemSinhVien
             Program.sqlcmd = Program.conn.CreateCommand();
             Program.sqlcmd.CommandType = CommandType.StoredProcedure;
             Program.sqlcmd.CommandText = strLenh;
-            Program.sqlcmd.Parameters.Add("@MASV", SqlDbType.Text).Value = txtMaSV.Text.Trim();
+            Program.sqlcmd.Parameters.Add("@MASV", SqlDbType.Text).Value = maSV;
             Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
             Program.sqlcmd.ExecuteNonQuery();
             String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
@@ -228,7 +233,11 @@ namespace QuanLyDiemSinhVien
                 reload();
                 cmbLop.SelectedIndex = vitriLop;
 
-                MessageBox.Show("Thêm sinh viên thành công", "", MessageBoxButtons.OK);
+                if (haveUndo)
+                    MessageBox.Show("Thêm sinh viên thành công", "", MessageBoxButtons.OK);
+                else
+                    MessageBox.Show("Phục hồi thành công", "", MessageBoxButtons.OK);
+
 
                 if (haveUndo)
                 {
@@ -337,10 +346,10 @@ namespace QuanLyDiemSinhVien
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            xuLyXoaSinhVien(txtMaSV.Text.ToString());
+            xuLyXoaSinhVien(true, txtMaSV.Text.ToString());
         }
 
-        private void xuLyXoaSinhVien(String maSV)
+        private void xuLyXoaSinhVien(bool haveUndo, String maSV)
         {
             if (Program.conn.State == ConnectionState.Closed)
                 Program.conn.Open();
@@ -383,17 +392,32 @@ namespace QuanLyDiemSinhVien
 
                     this.DsSinhVienTheoLopTableAdapter.Connection.ConnectionString = Program.connstr;
                     int result = this.DsSinhVienTheoLopTableAdapter.Delete(maSV);
-                    if (result == 1)
-                        MessageBox.Show("Xóa sinh viên thành công", "", MessageBoxButtons.OK);
+                    if (result == 1) {
+                        if (haveUndo)
+                            MessageBox.Show("Xóa sinh viên thành công", "", MessageBoxButtons.OK);
+                        else
+                            MessageBox.Show("Phục hồi thành công", "", MessageBoxButtons.OK);
+
+                    }
                     else
-                        MessageBox.Show("Xóa sinh viên bị lỗi", "", MessageBoxButtons.OK);
+                    {
+                        if (haveUndo)
+                            MessageBox.Show("Xóa sinh viên bị lỗi", "", MessageBoxButtons.OK);
+                        else
+                            MessageBox.Show("Phục hồi bị lỗi", "", MessageBoxButtons.OK);
+
+                    }
 
                     vitriLop = cmbLop.SelectedIndex;
                     reload();
                     cmbLop.SelectedIndex = vitriLop;
 
-                    st.Push(obj);
-                    updateUIButtonPhucHoi();
+                    if (haveUndo)
+                    {
+                        st.Push(obj);
+                        updateUIButtonPhucHoi();
+                    }
+
 
                 }
                 catch (Exception ex)
@@ -448,7 +472,7 @@ namespace QuanLyDiemSinhVien
                             MessageBox.Show(ex.Message);
                         }
 
-                        xuLyXoaSinhVien(maSV);
+                        xuLyXoaSinhVien(false, maSV);
                         updateUIButtonPhucHoi();
 
                         break;
