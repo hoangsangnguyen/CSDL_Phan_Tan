@@ -253,6 +253,16 @@ namespace QuanLyDiemSinhVien.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Text_Edit_icon_481 {
+            get {
+                object obj = ResourceManager.GetObject("Text-Edit-icon-481", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Undo_icon_24 {
             get {
                 object obj = ResourceManager.GetObject("Undo-icon-24", resourceCulture);
