@@ -86,6 +86,18 @@ namespace QuanLyDiemSinhVien
             }
         }
 
+        private void btnDiem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(FormDiem));
+            if (frm != null) frm.Activate();
+            else
+            {
+                FormDiem f = new FormDiem();
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
+
        
     }
 }
