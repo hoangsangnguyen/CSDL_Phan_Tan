@@ -24,6 +24,13 @@ namespace QuanLyDiemSinhVien
         {
             InitializeComponent();
         }
+        private Form CheckExists(Type ftype)
+        {
+            foreach (Form f in this.MdiChildren)
+                if (f.GetType() == ftype)
+                    return f;
+            return null;
+        }
 
         private void FormSinhVien_Load(object sender, EventArgs e)
         {
@@ -546,6 +553,17 @@ namespace QuanLyDiemSinhVien
                 this.noiSinh = noiSinh;
                 this.diaChi = diaChi;
                 this.nghiHoc = nghiHoc;
+            }
+        }
+
+        private void btnInDanhSachSinhVien_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(formRP_DSSV));
+            if (frm != null) frm.Activate();
+            else
+            {
+                formRP_DSSV f = new formRP_DSSV();
+                f.Show();
             }
         }
     }

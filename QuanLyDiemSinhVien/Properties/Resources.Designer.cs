@@ -153,6 +153,16 @@ namespace QuanLyDiemSinhVien.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Excel_24_icon {
+            get {
+                object obj = ResourceManager.GetObject("Excel-24-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Exit_24_icon {
             get {
                 object obj = ResourceManager.GetObject("Exit-24-icon", resourceCulture);
@@ -186,6 +196,26 @@ namespace QuanLyDiemSinhVien.Properties {
         internal static System.Drawing.Bitmap Login_48_icon {
             get {
                 object obj = ResourceManager.GetObject("Login-48-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap report_32_icon {
+            get {
+                object obj = ResourceManager.GetObject("report-32-icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap report_48_icon {
+            get {
+                object obj = ResourceManager.GetObject("report-48-icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

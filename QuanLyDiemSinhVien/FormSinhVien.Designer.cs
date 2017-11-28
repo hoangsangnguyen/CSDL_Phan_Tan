@@ -47,6 +47,7 @@
             this.btnGhi = new DevExpress.XtraBars.BarButtonItem();
             this.btnPhucHoi = new DevExpress.XtraBars.BarButtonItem();
             this.btnReload = new DevExpress.XtraBars.BarButtonItem();
+            this.btnInDanhSachSinhVien = new DevExpress.XtraBars.BarButtonItem();
             this.btnThoat = new DevExpress.XtraBars.BarButtonItem();
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -220,8 +221,9 @@
             this.btnGhi,
             this.btnPhucHoi,
             this.btnReload,
-            this.btnThoat});
-            this.barManager1.MaxItemId = 8;
+            this.btnThoat,
+            this.btnInDanhSachSinhVien});
+            this.barManager1.MaxItemId = 9;
             // 
             // bar3
             // 
@@ -236,6 +238,7 @@
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnGhi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnPhucHoi, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnReload, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
+            new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnInDanhSachSinhVien, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph),
             new DevExpress.XtraBars.LinkPersistInfo(DevExpress.XtraBars.BarLinkUserDefines.PaintStyle, this.btnThoat, DevExpress.XtraBars.BarItemPaintStyle.CaptionGlyph)});
             this.bar3.Text = "Tools";
             // 
@@ -287,6 +290,14 @@
             this.btnReload.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Button_Refresh_icon_24;
             this.btnReload.Name = "btnReload";
             this.btnReload.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnReload_ItemClick);
+            // 
+            // btnInDanhSachSinhVien
+            // 
+            this.btnInDanhSachSinhVien.Caption = "In Danh Sách Sinh Viên";
+            this.btnInDanhSachSinhVien.Id = 8;
+            this.btnInDanhSachSinhVien.ImageOptions.Image = global::QuanLyDiemSinhVien.Properties.Resources.Excel_24_icon;
+            this.btnInDanhSachSinhVien.Name = "btnInDanhSachSinhVien";
+            this.btnInDanhSachSinhVien.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnInDanhSachSinhVien_ItemClick);
             // 
             // btnThoat
             // 
@@ -714,5 +725,6 @@
         private DevExpress.XtraEditors.TextEdit txtTenSV;
         private DevExpress.XtraEditors.TextEdit txtHoSV;
         private DevExpress.XtraEditors.TextEdit txtMaSV;
+        private DevExpress.XtraBars.BarButtonItem btnInDanhSachSinhVien;
     }
 }
