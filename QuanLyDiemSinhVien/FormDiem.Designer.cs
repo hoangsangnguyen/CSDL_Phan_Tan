@@ -275,7 +275,9 @@
             // colColumn1
             // 
             this.colColumn1.Caption = "ĐIỂM";
+            this.colColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colColumn1.FieldName = "Column1";
+            this.colColumn1.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Right;
             this.colColumn1.Name = "colColumn1";
             this.colColumn1.Visible = true;
             this.colColumn1.VisibleIndex = 2;
