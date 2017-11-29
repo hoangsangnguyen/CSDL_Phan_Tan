@@ -42,9 +42,9 @@ namespace QuanLyDiemSinhVien {
         
         private sp_LayDiemSinhVienDataTable tablesp_LayDiemSinhVien;
         
-        private global::System.Data.DataRelation relationFK_SINHVIEN_DIEM;
-        
         private global::System.Data.DataRelation relationFK_MONHOC_DIEM;
+        
+        private global::System.Data.DataRelation relationFK_SINHVIEN_DIEM;
         
         private global::System.Data.DataRelation relationFK_KHOA_GIAOVIEN;
         
@@ -396,8 +396,8 @@ namespace QuanLyDiemSinhVien {
                     this.tablesp_LayDiemSinhVien.InitVars();
                 }
             }
-            this.relationFK_SINHVIEN_DIEM = this.Relations["FK_SINHVIEN_DIEM"];
             this.relationFK_MONHOC_DIEM = this.Relations["FK_MONHOC_DIEM"];
+            this.relationFK_SINHVIEN_DIEM = this.Relations["FK_SINHVIEN_DIEM"];
             this.relationFK_KHOA_GIAOVIEN = this.Relations["FK_KHOA_GIAOVIEN"];
             this.relationFK_KHOA_LOP = this.Relations["FK_KHOA_LOP"];
             this.relationFK_LOP_SINHVIEN = this.Relations["FK_LOP_SINHVIEN"];
@@ -430,16 +430,16 @@ namespace QuanLyDiemSinhVien {
             this.tablesp_LayDiemSinhVien = new sp_LayDiemSinhVienDataTable();
             base.Tables.Add(this.tablesp_LayDiemSinhVien);
             global::System.Data.ForeignKeyConstraint fkc;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MASVColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MAMHColumn});
             this.tableDIEM.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MAMHColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MASVColumn});
             this.tableDIEM.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
@@ -465,14 +465,14 @@ namespace QuanLyDiemSinhVien {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            this.relationFK_SINHVIEN_DIEM = new global::System.Data.DataRelation("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MASVColumn}, false);
-            this.Relations.Add(this.relationFK_SINHVIEN_DIEM);
             this.relationFK_MONHOC_DIEM = new global::System.Data.DataRelation("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
                         this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
                         this.tableDIEM.MAMHColumn}, false);
             this.Relations.Add(this.relationFK_MONHOC_DIEM);
+            this.relationFK_SINHVIEN_DIEM = new global::System.Data.DataRelation("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MASVColumn}, false);
+            this.Relations.Add(this.relationFK_SINHVIEN_DIEM);
             this.relationFK_KHOA_GIAOVIEN = new global::System.Data.DataRelation("FK_KHOA_GIAOVIEN", new global::System.Data.DataColumn[] {
                         this.tableKHOA.MAKHColumn}, new global::System.Data.DataColumn[] {
                         this.tableGIAOVIEN.MAKHColumn}, false);
@@ -3219,6 +3219,8 @@ namespace QuanLyDiemSinhVien {
             
             private global::System.Data.DataColumn columnDiem;
             
+            private global::System.Data.DataColumn columnMASV1;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public sp_LayDiemSinhVienDataTable() {
@@ -3278,6 +3280,14 @@ namespace QuanLyDiemSinhVien {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn MASV1Column {
+                get {
+                    return this.columnMASV1;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -3313,22 +3323,16 @@ namespace QuanLyDiemSinhVien {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public sp_LayDiemSinhVienRow Addsp_LayDiemSinhVienRow(string MASV, string HOTEN, double Diem) {
+            public sp_LayDiemSinhVienRow Addsp_LayDiemSinhVienRow(string MASV, string HOTEN, double Diem, string MASV1) {
                 sp_LayDiemSinhVienRow rowsp_LayDiemSinhVienRow = ((sp_LayDiemSinhVienRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         MASV,
                         HOTEN,
-                        Diem};
+                        Diem,
+                        MASV1};
                 rowsp_LayDiemSinhVienRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowsp_LayDiemSinhVienRow);
                 return rowsp_LayDiemSinhVienRow;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public sp_LayDiemSinhVienRow FindByMASV(string MASV) {
-                return ((sp_LayDiemSinhVienRow)(this.Rows.Find(new object[] {
-                            MASV})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3351,6 +3355,7 @@ namespace QuanLyDiemSinhVien {
                 this.columnMASV = base.Columns["MASV"];
                 this.columnHOTEN = base.Columns["HOTEN"];
                 this.columnDiem = base.Columns["Diem"];
+                this.columnMASV1 = base.Columns["MASV1"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3362,13 +3367,13 @@ namespace QuanLyDiemSinhVien {
                 base.Columns.Add(this.columnHOTEN);
                 this.columnDiem = new global::System.Data.DataColumn("Diem", typeof(double), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDiem);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnMASV}, true));
+                this.columnMASV1 = new global::System.Data.DataColumn("MASV1", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnMASV1);
                 this.columnMASV.AllowDBNull = false;
-                this.columnMASV.Unique = true;
                 this.columnMASV.MaxLength = 8;
                 this.columnHOTEN.ReadOnly = true;
                 this.columnHOTEN.MaxLength = 51;
+                this.columnMASV1.MaxLength = 8;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3560,23 +3565,23 @@ namespace QuanLyDiemSinhVien {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SINHVIENRow SINHVIENRow {
-                get {
-                    return ((SINHVIENRow)(this.GetParentRow(this.Table.ParentRelations["FK_SINHVIEN_DIEM"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_SINHVIEN_DIEM"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MONHOCRow MONHOCRow {
                 get {
                     return ((MONHOCRow)(this.GetParentRow(this.Table.ParentRelations["FK_MONHOC_DIEM"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_MONHOC_DIEM"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SINHVIENRow SINHVIENRow {
+                get {
+                    return ((SINHVIENRow)(this.GetParentRow(this.Table.ParentRelations["FK_SINHVIEN_DIEM"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_SINHVIEN_DIEM"]);
                 }
             }
             
@@ -4626,6 +4631,22 @@ namespace QuanLyDiemSinhVien {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string MASV1 {
+                get {
+                    try {
+                        return ((string)(this[this.tablesp_LayDiemSinhVien.MASV1Column]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'MASV1\' in table \'sp_LayDiemSinhVien\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablesp_LayDiemSinhVien.MASV1Column] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHOTENNull() {
                 return this.IsNull(this.tablesp_LayDiemSinhVien.HOTENColumn);
             }
@@ -4646,6 +4667,18 @@ namespace QuanLyDiemSinhVien {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDiemNull() {
                 this[this.tablesp_LayDiemSinhVien.DiemColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsMASV1Null() {
+                return this.IsNull(this.tablesp_LayDiemSinhVien.MASV1Column);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetMASV1Null() {
+                this[this.tablesp_LayDiemSinhVien.MASV1Column] = global::System.Convert.DBNull;
             }
         }
         
@@ -8366,6 +8399,7 @@ SELECT MASV, HO, TEN, MALOP, PHAI, NGAYSINH, NOISINH, DIACHI, NGHIHOC FROM SINHV
             tableMapping.ColumnMappings.Add("MASV", "MASV");
             tableMapping.ColumnMappings.Add("HOTEN", "HOTEN");
             tableMapping.ColumnMappings.Add("Diem", "Diem");
+            tableMapping.ColumnMappings.Add("MASV1", "MASV1");
             this._adapter.TableMappings.Add(tableMapping);
         }
         
