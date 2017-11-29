@@ -558,11 +558,16 @@ namespace QuanLyDiemSinhVien
 
         private void btnInDanhSachSinhVien_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            reload();
+            String maLop = cmbLop.SelectedValue.ToString();
+            String tenLop = cmbLop.Text.ToString();
             Form frm = this.CheckExists(typeof(formRP_DSSV));
             if (frm != null) frm.Activate();
             else
             {
                 formRP_DSSV f = new formRP_DSSV();
+                f.maLop = maLop;
+                f.tenLop = tenLop;
                 f.Show();
             }
         }
