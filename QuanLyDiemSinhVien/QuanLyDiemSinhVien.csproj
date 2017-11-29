@@ -180,6 +180,7 @@
     </None>
     <None Include="DS.xss">
       <DependentUpon>DS.xsd</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="DsKhoa.xsc">
       <DependentUpon>DsKhoa.xsd</DependentUpon>
