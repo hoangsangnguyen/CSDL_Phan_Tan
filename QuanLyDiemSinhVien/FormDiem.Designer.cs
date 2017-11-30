@@ -254,10 +254,10 @@
             // 
             this.gcDiem.DataSource = this.bdsLayDiemSinhVien;
             this.gcDiem.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gcDiem.Location = new System.Drawing.Point(0, 269);
+            this.gcDiem.Location = new System.Drawing.Point(0, 260);
             this.gcDiem.MainView = this.gridView1;
             this.gcDiem.Name = "gcDiem";
-            this.gcDiem.Size = new System.Drawing.Size(894, 341);
+            this.gcDiem.Size = new System.Drawing.Size(894, 350);
             this.gcDiem.TabIndex = 2;
             this.gcDiem.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -275,23 +275,18 @@
             // 
             this.colMASV.FieldName = "MASV";
             this.colMASV.Name = "colMASV";
-            this.colMASV.OptionsColumn.AllowEdit = false;
             this.colMASV.Visible = true;
             this.colMASV.VisibleIndex = 0;
             // 
             // colHOTEN
             // 
-            this.colHOTEN.Caption = "HỌ TÊN";
             this.colHOTEN.FieldName = "HOTEN";
             this.colHOTEN.Name = "colHOTEN";
-            this.colHOTEN.OptionsColumn.AllowEdit = false;
             this.colHOTEN.Visible = true;
             this.colHOTEN.VisibleIndex = 1;
             // 
             // colDiem
             // 
-            this.colDiem.Caption = "ĐIỂM";
-            this.colDiem.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.colDiem.FieldName = "Diem";
             this.colDiem.Name = "colDiem";
             this.colDiem.Visible = true;
@@ -341,13 +336,13 @@
         private System.Windows.Forms.ComboBox cmbTenMonHoc;
         private System.Windows.Forms.BindingSource bdsLayDiemSinhVien;
         private DSTableAdapters.sp_LayDiemSinhVienTableAdapter LayDiemSinhVienTableAdapter;
+        private System.Windows.Forms.ComboBox cmbMaLop;
+        private System.Windows.Forms.ComboBox cmbLan;
+        private System.Windows.Forms.Button btnReportDsDiem;
         private DevExpress.XtraGrid.GridControl gcDiem;
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colMASV;
         private DevExpress.XtraGrid.Columns.GridColumn colHOTEN;
         private DevExpress.XtraGrid.Columns.GridColumn colDiem;
-        private System.Windows.Forms.ComboBox cmbMaLop;
-        private System.Windows.Forms.ComboBox cmbLan;
-        private System.Windows.Forms.Button btnReportDsDiem;
     }
 }
