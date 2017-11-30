@@ -13,6 +13,8 @@ namespace QuanLyDiemSinhVien
 {
     public partial class FormDiem : Form
     {
+        const bool SHOW_DIEM = false;
+        
         public FormDiem()
         {
             InitializeComponent();
@@ -29,8 +31,10 @@ namespace QuanLyDiemSinhVien
         private void FormDiem_Load(object sender, EventArgs e)
         {
             dS.EnforceConstraints = false;
+            
             this.mONHOCTableAdapter.Fill(this.dS.MONHOC);
             this.lOPTableAdapter.Fill(this.dS.LOP);
+            setDataSourceForCmbLan();
 
             gcDiem.Hide();
             
@@ -39,17 +43,25 @@ namespace QuanLyDiemSinhVien
         private void btnBatDau_Click(object sender, EventArgs e)
         {
             gcDiem.Show();
+            updateUI(SHOW_DIEM);
             initGcMaSvHoTenSinhVien();
-            
+
+        }
+
+        private void setDataSourceForCmbLan()
+        {
+            var soLan = new [] { "1", "2" };
+            cmbLan.DataSource = soLan;
         }
 
         private void initGcMaSvHoTenSinhVien()
         {
             try
             {
-                this.LayDiemSinhVienTableAdapter.Fill(this.dS.sp_LayDiemSinhVien, txtMaLop.Text,
+                this.LayDiemSinhVienTableAdapter.Fill(this.dS.sp_LayDiemSinhVien,
+                                                        cmbMaLop.SelectedValue.ToString(),
                                                         cmbTenMonHoc.SelectedValue.ToString(),
-                                                        short.Parse(txtLan.Text));
+                                                        short.Parse(cmbLan.SelectedValue.ToString()));
             }
             catch (System.Exception ex)
             {
@@ -57,6 +69,15 @@ namespace QuanLyDiemSinhVien
             }
 
             this.LayDiemSinhVienTableAdapter.Connection.ConnectionString = Program.connstr;
+
+            DataTable data = this.LayDiemSinhVienTableAdapter.GetData(cmbMaLop.SelectedValue.ToString(),
+                                                                    cmbTenMonHoc.SelectedValue.ToString(),
+                                                                    short.Parse(cmbLan.SelectedValue.ToString()));
+            if (data.Rows.Count == 0) {
+                MessageBox.Show("Data null");
+                updateUI(!SHOW_DIEM);
+            }
+           
         }
 
         private void btnLuu_Click(object sender, EventArgs e)
@@ -69,7 +90,7 @@ namespace QuanLyDiemSinhVien
 
             String maSv = "";
             String maMH = cmbTenMonHoc.SelectedValue.ToString();
-            int lan = Int32.Parse(txtLan.Text.ToString());
+            int lan = Int32.Parse(cmbLan.SelectedValue.ToString());
             float diem = 0;
             foreach (DataRowView row in bdsLayDiemSinhVien)
             {
@@ -79,12 +100,10 @@ namespace QuanLyDiemSinhVien
                 {
                     diem = float.Parse(row["Diem"].ToString());
                     table.Rows.Add(maSv, maMH, lan, diem);
-                    MessageBox.Show(maSv);
                 }
 
             }
 
-            MessageBox.Show("" + table.Rows.Count);
 
             if (Program.conn.State == ConnectionState.Closed)
                 Program.conn.Open();
@@ -98,15 +117,30 @@ namespace QuanLyDiemSinhVien
             SqlDataAdapter dpt = new SqlDataAdapter(Program.sqlcmd);
             DataTable ds = new DataTable();
             dpt.Fill(ds);
+            if (ds.Rows.Count > 0)
+                MessageBox.Show("CẬP NHẬT ĐIỂM THÀNH CÔNG");
+            else
+                MessageBox.Show("CẬP NHẬT ĐIỂM THẤT BẠI");
 
-            MessageBox.Show("end" + ds.Rows.Count);
-            foreach (DataRow row in ds.Rows)
-            {
-                MessageBox.Show(row["MASV"].ToString() + ", " + row["LAN"].ToString() + row["DIEM"].ToString());
-            }
+            updateUI(!SHOW_DIEM);
 
         }
 
+        private void updateUI(bool state)
+        {
+            cmbTenLop.Enabled = cmbTenMonHoc.Enabled = cmbMaLop.Enabled = cmbLan.Enabled
+                = btnBatDau.Enabled = state;
+            btnLuu.Enabled = !state;
 
+            if (state == !SHOW_DIEM)
+                gcDiem.Hide();
+            else
+                gcDiem.Show();
+        }
+
+        private void btnReportDsDiem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
