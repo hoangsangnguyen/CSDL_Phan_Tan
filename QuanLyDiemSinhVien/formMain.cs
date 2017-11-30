@@ -98,6 +98,18 @@ namespace QuanLyDiemSinhVien
             }
         }
 
+        private void btnTaoTaiKhoan_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            Form frm = this.CheckExists(typeof(FormTaoTaiKhoan));
+            if (frm != null) frm.Activate();
+            else
+            {
+                FormTaoTaiKhoan f = new FormTaoTaiKhoan();
+                f.MdiParent = this;
+                f.Show();
+            }
+        }
+
        
     }
 }
