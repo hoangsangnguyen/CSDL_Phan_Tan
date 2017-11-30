@@ -34,15 +34,16 @@
             System.Windows.Forms.Label tENMHLabel;
             this.label1 = new System.Windows.Forms.Label();
             this.groupBoxFunction = new System.Windows.Forms.GroupBox();
+            this.btnReportDsDiem = new System.Windows.Forms.Button();
+            this.cmbLan = new System.Windows.Forms.ComboBox();
+            this.cmbMaLop = new System.Windows.Forms.ComboBox();
+            this.lOPBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dS = new QuanLyDiemSinhVien.DS();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnBatDau = new System.Windows.Forms.Button();
-            this.txtLan = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.cmbTenMonHoc = new System.Windows.Forms.ComboBox();
             this.mONHOCBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dS = new QuanLyDiemSinhVien.DS();
-            this.txtMaLop = new System.Windows.Forms.TextBox();
-            this.lOPBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.cmbTenLop = new System.Windows.Forms.ComboBox();
             this.lOPTableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.LOPTableAdapter();
             this.tableAdapterManager = new QuanLyDiemSinhVien.DSTableAdapters.TableAdapterManager();
@@ -53,14 +54,14 @@
             this.gridView1 = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colMASV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colHOTEN = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDiem = new DevExpress.XtraGrid.Columns.GridColumn();
             tENLOPLabel = new System.Windows.Forms.Label();
             mALOPLabel = new System.Windows.Forms.Label();
             tENMHLabel = new System.Windows.Forms.Label();
             this.groupBoxFunction.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lOPBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLayDiemSinhVien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcDiem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
@@ -104,21 +105,63 @@
             // 
             // groupBoxFunction
             // 
+            this.groupBoxFunction.Controls.Add(this.btnReportDsDiem);
+            this.groupBoxFunction.Controls.Add(this.cmbLan);
+            this.groupBoxFunction.Controls.Add(this.cmbMaLop);
             this.groupBoxFunction.Controls.Add(this.btnLuu);
             this.groupBoxFunction.Controls.Add(this.btnBatDau);
-            this.groupBoxFunction.Controls.Add(this.txtLan);
             this.groupBoxFunction.Controls.Add(this.label2);
             this.groupBoxFunction.Controls.Add(tENMHLabel);
             this.groupBoxFunction.Controls.Add(this.cmbTenMonHoc);
             this.groupBoxFunction.Controls.Add(mALOPLabel);
-            this.groupBoxFunction.Controls.Add(this.txtMaLop);
             this.groupBoxFunction.Controls.Add(tENLOPLabel);
             this.groupBoxFunction.Controls.Add(this.cmbTenLop);
             this.groupBoxFunction.Location = new System.Drawing.Point(56, 62);
             this.groupBoxFunction.Name = "groupBoxFunction";
-            this.groupBoxFunction.Size = new System.Drawing.Size(813, 171);
+            this.groupBoxFunction.Size = new System.Drawing.Size(813, 182);
             this.groupBoxFunction.TabIndex = 1;
             this.groupBoxFunction.TabStop = false;
+            // 
+            // btnReportDsDiem
+            // 
+            this.btnReportDsDiem.Location = new System.Drawing.Point(524, 142);
+            this.btnReportDsDiem.Name = "btnReportDsDiem";
+            this.btnReportDsDiem.Size = new System.Drawing.Size(178, 23);
+            this.btnReportDsDiem.TabIndex = 12;
+            this.btnReportDsDiem.Text = "In danh sách điểm";
+            this.btnReportDsDiem.UseVisualStyleBackColor = true;
+            this.btnReportDsDiem.Click += new System.EventHandler(this.btnReportDsDiem_Click);
+            // 
+            // cmbLan
+            // 
+            this.cmbLan.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbLan.FormattingEnabled = true;
+            this.cmbLan.Location = new System.Drawing.Point(427, 102);
+            this.cmbLan.Name = "cmbLan";
+            this.cmbLan.Size = new System.Drawing.Size(65, 27);
+            this.cmbLan.TabIndex = 11;
+            // 
+            // cmbMaLop
+            // 
+            this.cmbMaLop.DataSource = this.lOPBindingSource;
+            this.cmbMaLop.DisplayMember = "MALOP";
+            this.cmbMaLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMaLop.FormattingEnabled = true;
+            this.cmbMaLop.Location = new System.Drawing.Point(427, 28);
+            this.cmbMaLop.Name = "cmbMaLop";
+            this.cmbMaLop.Size = new System.Drawing.Size(128, 27);
+            this.cmbMaLop.TabIndex = 10;
+            this.cmbMaLop.ValueMember = "MALOP";
+            // 
+            // lOPBindingSource
+            // 
+            this.lOPBindingSource.DataMember = "LOP";
+            this.lOPBindingSource.DataSource = this.dS;
+            // 
+            // dS
+            // 
+            this.dS.DataSetName = "DS";
+            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // btnLuu
             // 
@@ -140,13 +183,6 @@
             this.btnBatDau.UseVisualStyleBackColor = true;
             this.btnBatDau.Click += new System.EventHandler(this.btnBatDau_Click);
             // 
-            // txtLan
-            // 
-            this.txtLan.Location = new System.Drawing.Point(427, 104);
-            this.txtLan.Name = "txtLan";
-            this.txtLan.Size = new System.Drawing.Size(57, 26);
-            this.txtLan.TabIndex = 7;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -158,13 +194,13 @@
             // 
             // cmbTenMonHoc
             // 
-            this.cmbTenMonHoc.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.mONHOCBindingSource, "TENMH", true));
             this.cmbTenMonHoc.DataSource = this.mONHOCBindingSource;
             this.cmbTenMonHoc.DisplayMember = "TENMH";
+            this.cmbTenMonHoc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTenMonHoc.FormattingEnabled = true;
             this.cmbTenMonHoc.Location = new System.Drawing.Point(147, 98);
             this.cmbTenMonHoc.Name = "cmbTenMonHoc";
-            this.cmbTenMonHoc.Size = new System.Drawing.Size(140, 27);
+            this.cmbTenMonHoc.Size = new System.Drawing.Size(181, 27);
             this.cmbTenMonHoc.TabIndex = 5;
             this.cmbTenMonHoc.ValueMember = "MAMH";
             // 
@@ -173,33 +209,15 @@
             this.mONHOCBindingSource.DataMember = "MONHOC";
             this.mONHOCBindingSource.DataSource = this.dS;
             // 
-            // dS
-            // 
-            this.dS.DataSetName = "DS";
-            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // txtMaLop
-            // 
-            this.txtMaLop.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.lOPBindingSource, "MALOP", true));
-            this.txtMaLop.Location = new System.Drawing.Point(427, 33);
-            this.txtMaLop.Name = "txtMaLop";
-            this.txtMaLop.Size = new System.Drawing.Size(100, 26);
-            this.txtMaLop.TabIndex = 3;
-            // 
-            // lOPBindingSource
-            // 
-            this.lOPBindingSource.DataMember = "LOP";
-            this.lOPBindingSource.DataSource = this.dS;
-            // 
             // cmbTenLop
             // 
-            this.cmbTenLop.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.lOPBindingSource, "TENLOP", true));
             this.cmbTenLop.DataSource = this.lOPBindingSource;
             this.cmbTenLop.DisplayMember = "TENLOP";
+            this.cmbTenLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbTenLop.FormattingEnabled = true;
             this.cmbTenLop.Location = new System.Drawing.Point(147, 30);
             this.cmbTenLop.Name = "cmbTenLop";
-            this.cmbTenLop.Size = new System.Drawing.Size(140, 27);
+            this.cmbTenLop.Size = new System.Drawing.Size(181, 27);
             this.cmbTenLop.TabIndex = 1;
             this.cmbTenLop.ValueMember = "TENLOP";
             // 
@@ -236,10 +254,10 @@
             // 
             this.gcDiem.DataSource = this.bdsLayDiemSinhVien;
             this.gcDiem.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gcDiem.Location = new System.Drawing.Point(0, 254);
+            this.gcDiem.Location = new System.Drawing.Point(0, 269);
             this.gcDiem.MainView = this.gridView1;
             this.gcDiem.Name = "gcDiem";
-            this.gcDiem.Size = new System.Drawing.Size(894, 351);
+            this.gcDiem.Size = new System.Drawing.Size(894, 341);
             this.gcDiem.TabIndex = 2;
             this.gcDiem.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -249,7 +267,7 @@
             this.gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] {
             this.colMASV,
             this.colHOTEN,
-            this.colColumn1});
+            this.colDiem});
             this.gridView1.GridControl = this.gcDiem;
             this.gridView1.Name = "gridView1";
             // 
@@ -260,7 +278,6 @@
             this.colMASV.OptionsColumn.AllowEdit = false;
             this.colMASV.Visible = true;
             this.colMASV.VisibleIndex = 0;
-            this.colMASV.Width = 92;
             // 
             // colHOTEN
             // 
@@ -270,24 +287,21 @@
             this.colHOTEN.OptionsColumn.AllowEdit = false;
             this.colHOTEN.Visible = true;
             this.colHOTEN.VisibleIndex = 1;
-            this.colHOTEN.Width = 298;
             // 
-            // colColumn1
+            // colDiem
             // 
-            this.colColumn1.Caption = "ĐIỂM";
-            this.colColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.colColumn1.FieldName = "Column1";
-            this.colColumn1.Fixed = DevExpress.XtraGrid.Columns.FixedStyle.Right;
-            this.colColumn1.Name = "colColumn1";
-            this.colColumn1.Visible = true;
-            this.colColumn1.VisibleIndex = 2;
-            this.colColumn1.Width = 302;
+            this.colDiem.Caption = "ĐIỂM";
+            this.colDiem.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.colDiem.FieldName = "Diem";
+            this.colDiem.Name = "colDiem";
+            this.colDiem.Visible = true;
+            this.colDiem.VisibleIndex = 2;
             // 
             // FormDiem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(894, 605);
+            this.ClientSize = new System.Drawing.Size(894, 610);
             this.Controls.Add(this.gcDiem);
             this.Controls.Add(this.groupBoxFunction);
             this.Controls.Add(this.label1);
@@ -299,9 +313,9 @@
             this.Load += new System.EventHandler(this.FormDiem_Load);
             this.groupBoxFunction.ResumeLayout(false);
             this.groupBoxFunction.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lOPBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLayDiemSinhVien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcDiem)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
@@ -318,13 +332,11 @@
         private System.Windows.Forms.BindingSource lOPBindingSource;
         private DSTableAdapters.LOPTableAdapter lOPTableAdapter;
         private DSTableAdapters.TableAdapterManager tableAdapterManager;
-        private System.Windows.Forms.TextBox txtMaLop;
         private System.Windows.Forms.ComboBox cmbTenLop;
         private DSTableAdapters.MONHOCTableAdapter mONHOCTableAdapter;
         private System.Windows.Forms.BindingSource mONHOCBindingSource;
         private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Button btnBatDau;
-        private System.Windows.Forms.TextBox txtLan;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmbTenMonHoc;
         private System.Windows.Forms.BindingSource bdsLayDiemSinhVien;
@@ -333,6 +345,9 @@
         private DevExpress.XtraGrid.Views.Grid.GridView gridView1;
         private DevExpress.XtraGrid.Columns.GridColumn colMASV;
         private DevExpress.XtraGrid.Columns.GridColumn colHOTEN;
-        private DevExpress.XtraGrid.Columns.GridColumn colColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn colDiem;
+        private System.Windows.Forms.ComboBox cmbMaLop;
+        private System.Windows.Forms.ComboBox cmbLan;
+        private System.Windows.Forms.Button btnReportDsDiem;
     }
 }
