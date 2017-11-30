@@ -17,7 +17,7 @@ namespace QuanLyDiemSinhVien
         public Stack st = new Stack();
 
         int choose = 0;
-       
+
         int vitri = 0;
         string maKhoa = "";
 
@@ -36,9 +36,10 @@ namespace QuanLyDiemSinhVien
 
         private void FormLop_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'dS.SINHVIEN' table. You can move, or remove it, as needed.
-
-            // TODO: This line of code loads data into the 'dS.LOP' table. You can move, or remove it, as needed.
+            // TODO: This line of code loads data into the 'dS.KHOA' table. You can move, or remove it, as needed.
+            this.kHOATableAdapter.Fill(this.dS.KHOA);
+            // TODO: This line of code loads data into the 'dS.KHOA' table. You can move, or remove it, as needed.
+            this.kHOATableAdapter.Fill(this.dS.KHOA);
             dS.EnforceConstraints = false;
             this.lOPTableAdapter.Fill(this.dS.LOP);
 
@@ -63,31 +64,32 @@ namespace QuanLyDiemSinhVien
             updateUIButtonPhucHoi();
         }
 
-        private void cmbKhoa_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmbKhoa_SelectedIndexChanged_1(object sender, EventArgs e)
         {
             if (cmbKhoa.SelectedValue == null) return;
 
-            if (cmbKhoa.SelectedValue.ToString() == "System.Data.DataRowView") return;
-            Program.servername = cmbKhoa.SelectedValue.ToString();
+            //if (cmbKhoa.SelectedValue.ToString() == "System.Data.DataRowView") return;
+            //Program.servername = cmbKhoa.SelectedValue.ToString();
 
-            if (cmbKhoa.SelectedIndex != Program.mChinhanh)
-            {
-                Program.mlogin = Program.remotelogin;
-                Program.password = Program.remotepassword;
-            }
-            else
-            {
-                Program.mlogin = Program.mloginDN;
-                Program.password = Program.passwordDN;
-            }
-            if (Program.KetNoi() == 0)
-                MessageBox.Show("Lỗi kết nối về chi nhánh mới", "", MessageBoxButtons.OK);
-            else
-            {
-                this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
-                this.lOPTableAdapter.Fill(this.dS.LOP);
-                maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
-            }
+            //if (cmbKhoa.SelectedIndex != Program.mChinhanh)
+            //{
+            //    Program.mlogin = Program.remotelogin;
+            //    Program.password = Program.remotepassword;
+            //}
+            //else
+            //{
+            //    Program.mlogin = Program.mloginDN;
+            //    Program.password = Program.passwordDN;
+            //}
+            //if (Program.KetNoi() == 0)
+            //    MessageBox.Show("Lỗi kết nối về chi nhánh mới", "", MessageBoxButtons.OK);
+            //else
+            //{
+            this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
+            this.lOPTableAdapter.Fill(this.dS.LOP);
+            maKhoa = cmbKhoa.SelectedValue.ToString();
+            //maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
+            //}
         }
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -126,11 +128,11 @@ namespace QuanLyDiemSinhVien
 
                     if (Program.conn.State == ConnectionState.Closed)
                         Program.conn.Open();
-                    String strLenh = "dbo.sp_TIMLOP";
+                    String strLenh = "dbo.sp_TIMLOP ";
                     Program.sqlcmd = Program.conn.CreateCommand();
                     Program.sqlcmd.CommandType = CommandType.StoredProcedure;
                     Program.sqlcmd.CommandText = strLenh;
-                    Program.sqlcmd.Parameters.Add("@X", SqlDbType.Text).Value = txtMaLop.Text;
+                    Program.sqlcmd.Parameters.Add("@X", SqlDbType.Text).Value = "N'" + txtMaLop.Text + "'";
                     Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
                     Program.sqlcmd.ExecuteNonQuery();
                     String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
@@ -142,11 +144,11 @@ namespace QuanLyDiemSinhVien
                         return;
                     }
 
-                    String strLenhKiemTra = "dbo.sp_KiemTraTenLop";
+                    String strLenhKiemTra = "dbo.sp_KiemTraTenLop ";
                     Program.sqlcmd = Program.conn.CreateCommand();
                     Program.sqlcmd.CommandType = CommandType.StoredProcedure;
                     Program.sqlcmd.CommandText = strLenhKiemTra;
-                    Program.sqlcmd.Parameters.Add("@TENLOP", SqlDbType.Text).Value = txtTenLop.Text;
+                    Program.sqlcmd.Parameters.Add("@TENLOP", SqlDbType.Text).Value = convertStringToUTF8(txtTenLop.Text.ToString());
                     Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
                     Program.sqlcmd.ExecuteNonQuery();
                     Program.conn.Close();
@@ -391,13 +393,17 @@ namespace QuanLyDiemSinhVien
                 if (st.Count == 0)
                     return;
 
-                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Pop();
+                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Peek();
                 Object obj = objUndo.obj;
+
                 switch (objUndo.type)
                 {
                     case Program.THEM:
-                        MessageBox.Show("Khôi phục sau khi thêm");
+                        if (MessageBox.Show("Khôi phục sau khi thêm", "Xác nhận", MessageBoxButtons.OKCancel)
+                                        == DialogResult.Cancel)
+                            return;
 
+                        st.Pop();
                         String lenh = "";
 
                         try
@@ -416,7 +422,11 @@ namespace QuanLyDiemSinhVien
                         break;
 
                     case Program.HIEU_CHINH:
-                        MessageBox.Show("Khôi phục sau khi hiệu chỉnh");
+                        if (MessageBox.Show("Khôi phục sau khi hiệu chỉnh", "Xác nhận", MessageBoxButtons.OKCancel)
+                                       == DialogResult.Cancel)
+                            return;
+
+                        st.Pop();
                         try
                         {
                             Lop lopHieuChinh = (Lop)objUndo.obj;
@@ -444,7 +454,11 @@ namespace QuanLyDiemSinhVien
                         break;
 
                     case Program.XOA:
-                        MessageBox.Show("Khôi phục sau khi xóa");
+                        if (MessageBox.Show("Khôi phục sau khi xóa", "Xác nhận", MessageBoxButtons.OKCancel)
+                                       == DialogResult.Cancel)
+                            return;
+
+                        st.Pop();
                         try
                         {
                             Lop lopXoa = (Lop)objUndo.obj;
@@ -494,6 +508,8 @@ namespace QuanLyDiemSinhVien
             this.Close();
         }
 
+
+
     }
 
     public class Lop
@@ -510,5 +526,5 @@ namespace QuanLyDiemSinhVien
         }
     }
 
-  
+
 }
