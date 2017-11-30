@@ -130,6 +130,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QLDSVDsSP.xsd</DependentUpon>
     </Compile>
+    <Compile Include="rp_DsDiem.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rp_DsDiem.rpt</DependentUpon>
+    </Compile>
     <Compile Include="rp_DSSV.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -162,6 +167,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rp_DsDiem.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rp_DsDiem.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="rp_DSSV.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
