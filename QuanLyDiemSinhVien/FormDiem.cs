@@ -73,7 +73,8 @@ namespace QuanLyDiemSinhVien
             DataTable data = this.LayDiemSinhVienTableAdapter.GetData(cmbMaLop.SelectedValue.ToString(),
                                                                     cmbTenMonHoc.SelectedValue.ToString(),
                                                                     short.Parse(cmbLan.SelectedValue.ToString()));
-            if (data.Rows.Count == 0) {
+            if (data.Rows.Count == 0)
+            {
                 MessageBox.Show("Data null");
                 updateUI(!SHOW_DIEM);
             }
@@ -101,7 +102,7 @@ namespace QuanLyDiemSinhVien
                     diem = float.Parse(row["Diem"].ToString());
                     table.Rows.Add(maSv, maMH, lan, diem);
                 }
-
+                
             }
 
 
