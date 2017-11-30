@@ -42,9 +42,9 @@ namespace QuanLyDiemSinhVien {
         
         private sp_LayDiemSinhVienDataTable tablesp_LayDiemSinhVien;
         
-        private global::System.Data.DataRelation relationFK_SINHVIEN_DIEM;
-        
         private global::System.Data.DataRelation relationFK_MONHOC_DIEM;
+        
+        private global::System.Data.DataRelation relationFK_SINHVIEN_DIEM;
         
         private global::System.Data.DataRelation relationFK_KHOA_GIAOVIEN;
         
@@ -396,8 +396,8 @@ namespace QuanLyDiemSinhVien {
                     this.tablesp_LayDiemSinhVien.InitVars();
                 }
             }
-            this.relationFK_SINHVIEN_DIEM = this.Relations["FK_SINHVIEN_DIEM"];
             this.relationFK_MONHOC_DIEM = this.Relations["FK_MONHOC_DIEM"];
+            this.relationFK_SINHVIEN_DIEM = this.Relations["FK_SINHVIEN_DIEM"];
             this.relationFK_KHOA_GIAOVIEN = this.Relations["FK_KHOA_GIAOVIEN"];
             this.relationFK_KHOA_LOP = this.Relations["FK_KHOA_LOP"];
             this.relationFK_LOP_SINHVIEN = this.Relations["FK_LOP_SINHVIEN"];
@@ -430,16 +430,16 @@ namespace QuanLyDiemSinhVien {
             this.tablesp_LayDiemSinhVien = new sp_LayDiemSinhVienDataTable();
             base.Tables.Add(this.tablesp_LayDiemSinhVien);
             global::System.Data.ForeignKeyConstraint fkc;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MASVColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MAMHColumn});
             this.tableDIEM.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            fkc = new global::System.Data.ForeignKeyConstraint("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MAMHColumn});
+            fkc = new global::System.Data.ForeignKeyConstraint("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MASVColumn});
             this.tableDIEM.Constraints.Add(fkc);
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
@@ -465,14 +465,14 @@ namespace QuanLyDiemSinhVien {
             fkc.AcceptRejectRule = global::System.Data.AcceptRejectRule.None;
             fkc.DeleteRule = global::System.Data.Rule.None;
             fkc.UpdateRule = global::System.Data.Rule.Cascade;
-            this.relationFK_SINHVIEN_DIEM = new global::System.Data.DataRelation("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
-                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDIEM.MASVColumn}, false);
-            this.Relations.Add(this.relationFK_SINHVIEN_DIEM);
             this.relationFK_MONHOC_DIEM = new global::System.Data.DataRelation("FK_MONHOC_DIEM", new global::System.Data.DataColumn[] {
                         this.tableMONHOC.MAMHColumn}, new global::System.Data.DataColumn[] {
                         this.tableDIEM.MAMHColumn}, false);
             this.Relations.Add(this.relationFK_MONHOC_DIEM);
+            this.relationFK_SINHVIEN_DIEM = new global::System.Data.DataRelation("FK_SINHVIEN_DIEM", new global::System.Data.DataColumn[] {
+                        this.tableSINHVIEN.MASVColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDIEM.MASVColumn}, false);
+            this.Relations.Add(this.relationFK_SINHVIEN_DIEM);
             this.relationFK_KHOA_GIAOVIEN = new global::System.Data.DataRelation("FK_KHOA_GIAOVIEN", new global::System.Data.DataColumn[] {
                         this.tableKHOA.MAKHColumn}, new global::System.Data.DataColumn[] {
                         this.tableGIAOVIEN.MAKHColumn}, false);
@@ -3366,9 +3366,9 @@ namespace QuanLyDiemSinhVien {
                                 this.columnMASV}, true));
                 this.columnMASV.AllowDBNull = false;
                 this.columnMASV.Unique = true;
-                this.columnMASV.MaxLength = 8;
+                this.columnMASV.MaxLength = 10;
                 this.columnHOTEN.ReadOnly = true;
-                this.columnHOTEN.MaxLength = 51;
+                this.columnHOTEN.MaxLength = 101;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -3560,23 +3560,23 @@ namespace QuanLyDiemSinhVien {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SINHVIENRow SINHVIENRow {
-                get {
-                    return ((SINHVIENRow)(this.GetParentRow(this.Table.ParentRelations["FK_SINHVIEN_DIEM"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_SINHVIEN_DIEM"]);
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public MONHOCRow MONHOCRow {
                 get {
                     return ((MONHOCRow)(this.GetParentRow(this.Table.ParentRelations["FK_MONHOC_DIEM"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_MONHOC_DIEM"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public SINHVIENRow SINHVIENRow {
+                get {
+                    return ((SINHVIENRow)(this.GetParentRow(this.Table.ParentRelations["FK_SINHVIEN_DIEM"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_SINHVIEN_DIEM"]);
                 }
             }
             

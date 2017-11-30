@@ -70,6 +70,7 @@ namespace QuanLyDiemSinhVien
 
             this.LayDiemSinhVienTableAdapter.Connection.ConnectionString = Program.connstr;
 
+
             DataTable data = this.LayDiemSinhVienTableAdapter.GetData(cmbMaLop.SelectedValue.ToString(),
                                                                     cmbTenMonHoc.SelectedValue.ToString(),
                                                                     short.Parse(cmbLan.SelectedValue.ToString()));
