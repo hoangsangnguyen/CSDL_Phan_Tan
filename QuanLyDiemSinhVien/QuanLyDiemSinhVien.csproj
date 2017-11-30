@@ -106,6 +106,12 @@
     <Compile Include="FormMonHoc.Designer.cs">
       <DependentUpon>FormMonHoc.cs</DependentUpon>
     </Compile>
+    <Compile Include="formRP_Diem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRP_Diem.Designer.cs">
+      <DependentUpon>formRP_Diem.cs</DependentUpon>
+    </Compile>
     <Compile Include="formRP_DSSV.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>rp_DsDiem.rpt</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="rp_DSSV.cs">
       <AutoGen>True</AutoGen>
@@ -155,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMonHoc.resx">
       <DependentUpon>FormMonHoc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="formRP_Diem.resx">
+      <DependentUpon>formRP_Diem.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="formRP_DSSV.resx">
       <DependentUpon>formRP_DSSV.cs</DependentUpon>

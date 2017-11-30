@@ -140,7 +140,21 @@ namespace QuanLyDiemSinhVien
 
         private void btnReportDsDiem_Click(object sender, EventArgs e)
         {
-
+            String maLop = cmbMaLop.SelectedValue.ToString();
+            String tenLop = cmbTenLop.Text.ToString();
+            String lanThi = cmbLan.Text.ToString();
+            String monHoc = cmbTenMonHoc.Text.ToString();
+            String maMH = cmbTenMonHoc.SelectedValue.ToString();
+           
+                formRP_Diem f = new formRP_Diem();
+                f.maLop = maLop;
+                f.tenLop = tenLop;
+                f.maLop = maLop;
+                f.lanThi = lanThi;
+                f.maMH = maMH;
+                f.monHoc = monHoc;
+                f.Show();
+           
         }
     }
 }
