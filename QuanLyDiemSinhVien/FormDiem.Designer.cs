@@ -118,13 +118,13 @@
             this.groupBoxFunction.Controls.Add(this.cmbTenLop);
             this.groupBoxFunction.Location = new System.Drawing.Point(56, 62);
             this.groupBoxFunction.Name = "groupBoxFunction";
-            this.groupBoxFunction.Size = new System.Drawing.Size(813, 182);
+            this.groupBoxFunction.Size = new System.Drawing.Size(813, 218);
             this.groupBoxFunction.TabIndex = 1;
             this.groupBoxFunction.TabStop = false;
             // 
             // btnReportDsDiem
             // 
-            this.btnReportDsDiem.Location = new System.Drawing.Point(524, 142);
+            this.btnReportDsDiem.Location = new System.Drawing.Point(524, 155);
             this.btnReportDsDiem.Name = "btnReportDsDiem";
             this.btnReportDsDiem.Size = new System.Drawing.Size(178, 23);
             this.btnReportDsDiem.TabIndex = 12;
@@ -254,10 +254,10 @@
             // 
             this.gcDiem.DataSource = this.bdsLayDiemSinhVien;
             this.gcDiem.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.gcDiem.Location = new System.Drawing.Point(0, 260);
+            this.gcDiem.Location = new System.Drawing.Point(0, 286);
             this.gcDiem.MainView = this.gridView1;
             this.gcDiem.Name = "gcDiem";
-            this.gcDiem.Size = new System.Drawing.Size(894, 350);
+            this.gcDiem.Size = new System.Drawing.Size(894, 324);
             this.gcDiem.TabIndex = 2;
             this.gcDiem.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
