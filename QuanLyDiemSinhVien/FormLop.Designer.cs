@@ -46,6 +46,7 @@
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.cmbKhoa = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.dS = new QuanLyDiemSinhVien.DS();
             this.bdsDsLop = new System.Windows.Forms.BindingSource(this.components);
@@ -64,9 +65,6 @@
             this.sINHVIENTableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.SINHVIENTableAdapter();
             this.dsKhoa1 = new QuanLyDiemSinhVien.DsKhoa();
             this.bar3 = new DevExpress.XtraBars.Bar();
-            this.kHOABindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.kHOATableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.KHOATableAdapter();
-            this.cmbKhoa = new System.Windows.Forms.ComboBox();
             mALOPLabel = new System.Windows.Forms.Label();
             tENLOPLabel = new System.Windows.Forms.Label();
             mAKHLabel = new System.Windows.Forms.Label();
@@ -82,7 +80,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsSinhVien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsKhoa1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // mALOPLabel
@@ -248,6 +245,16 @@
             this.panel1.Size = new System.Drawing.Size(795, 77);
             this.panel1.TabIndex = 4;
             // 
+            // cmbKhoa
+            // 
+            this.cmbKhoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKhoa.FormattingEnabled = true;
+            this.cmbKhoa.Location = new System.Drawing.Point(344, 9);
+            this.cmbKhoa.Name = "cmbKhoa";
+            this.cmbKhoa.Size = new System.Drawing.Size(187, 27);
+            this.cmbKhoa.TabIndex = 2;
+            this.cmbKhoa.SelectedIndexChanged += new System.EventHandler(this.cmbKhoa_SelectedIndexChanged_1);
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -400,28 +407,6 @@
             this.bar3.OptionsBar.UseWholeRow = true;
             this.bar3.Text = "Status bar";
             // 
-            // kHOABindingSource
-            // 
-            this.kHOABindingSource.DataMember = "KHOA";
-            this.kHOABindingSource.DataSource = this.dS;
-            // 
-            // kHOATableAdapter
-            // 
-            this.kHOATableAdapter.ClearBeforeFill = true;
-            // 
-            // cmbKhoa
-            // 
-            this.cmbKhoa.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.kHOABindingSource, "TENKH", true));
-            this.cmbKhoa.DataSource = this.kHOABindingSource;
-            this.cmbKhoa.DisplayMember = "MAKH";
-            this.cmbKhoa.FormattingEnabled = true;
-            this.cmbKhoa.Location = new System.Drawing.Point(344, 9);
-            this.cmbKhoa.Name = "cmbKhoa";
-            this.cmbKhoa.Size = new System.Drawing.Size(187, 27);
-            this.cmbKhoa.TabIndex = 2;
-            this.cmbKhoa.ValueMember = "TENKH";
-            this.cmbKhoa.SelectedIndexChanged += new System.EventHandler(this.cmbKhoa_SelectedIndexChanged_1);
-            // 
             // FormLop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -454,7 +439,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.txtMaLop.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsSinhVien)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dsKhoa1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -494,8 +478,6 @@
         private DSTableAdapters.SINHVIENTableAdapter sINHVIENTableAdapter;
         private DsKhoa dsKhoa1;
         private DevExpress.XtraBars.Bar bar3;
-        private System.Windows.Forms.BindingSource kHOABindingSource;
-        private DSTableAdapters.KHOATableAdapter kHOATableAdapter;
         private System.Windows.Forms.ComboBox cmbKhoa;
     }
 }

@@ -36,10 +36,6 @@ namespace QuanLyDiemSinhVien
 
         private void FormLop_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'dS.KHOA' table. You can move, or remove it, as needed.
-            this.kHOATableAdapter.Fill(this.dS.KHOA);
-            // TODO: This line of code loads data into the 'dS.KHOA' table. You can move, or remove it, as needed.
-            this.kHOATableAdapter.Fill(this.dS.KHOA);
             dS.EnforceConstraints = false;
             this.lOPTableAdapter.Fill(this.dS.LOP);
 
@@ -68,28 +64,27 @@ namespace QuanLyDiemSinhVien
         {
             if (cmbKhoa.SelectedValue == null) return;
 
-            //if (cmbKhoa.SelectedValue.ToString() == "System.Data.DataRowView") return;
-            //Program.servername = cmbKhoa.SelectedValue.ToString();
+            if (cmbKhoa.SelectedValue.ToString() == "System.Data.DataRowView") return;
+            Program.servername = cmbKhoa.SelectedValue.ToString();
 
-            //if (cmbKhoa.SelectedIndex != Program.mChinhanh)
-            //{
-            //    Program.mlogin = Program.remotelogin;
-            //    Program.password = Program.remotepassword;
-            //}
-            //else
-            //{
-            //    Program.mlogin = Program.mloginDN;
-            //    Program.password = Program.passwordDN;
-            //}
-            //if (Program.KetNoi() == 0)
-            //    MessageBox.Show("Lỗi kết nối về chi nhánh mới", "", MessageBoxButtons.OK);
-            //else
-            //{
-            this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
-            this.lOPTableAdapter.Fill(this.dS.LOP);
-            maKhoa = cmbKhoa.SelectedValue.ToString();
-            //maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
-            //}
+            if (cmbKhoa.SelectedIndex != Program.mChinhanh)
+            {
+                Program.mlogin = Program.remotelogin;
+                Program.password = Program.remotepassword;
+            }
+            else
+            {
+                Program.mlogin = Program.mloginDN;
+                Program.password = Program.passwordDN;
+            }
+            if (Program.KetNoi() == 0)
+                MessageBox.Show("Lỗi kết nối về chi nhánh mới", "", MessageBoxButtons.OK);
+            else
+            {
+                this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
+                this.lOPTableAdapter.Fill(this.dS.LOP);
+                maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
+            }
         }
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
