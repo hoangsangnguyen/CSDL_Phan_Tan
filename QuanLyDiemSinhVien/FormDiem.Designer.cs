@@ -55,6 +55,7 @@
             this.colMASV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colHOTEN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDiem = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.btnInDiemCaNhan = new System.Windows.Forms.Button();
             tENLOPLabel = new System.Windows.Forms.Label();
             mALOPLabel = new System.Windows.Forms.Label();
             tENMHLabel = new System.Windows.Forms.Label();
@@ -105,6 +106,7 @@
             // 
             // groupBoxFunction
             // 
+            this.groupBoxFunction.Controls.Add(this.btnInDiemCaNhan);
             this.groupBoxFunction.Controls.Add(this.btnReportDsDiem);
             this.groupBoxFunction.Controls.Add(this.cmbLan);
             this.groupBoxFunction.Controls.Add(this.cmbMaLop);
@@ -292,6 +294,16 @@
             this.colDiem.Visible = true;
             this.colDiem.VisibleIndex = 2;
             // 
+            // btnInDiemCaNhan
+            // 
+            this.btnInDiemCaNhan.Location = new System.Drawing.Point(524, 189);
+            this.btnInDiemCaNhan.Name = "btnInDiemCaNhan";
+            this.btnInDiemCaNhan.Size = new System.Drawing.Size(178, 23);
+            this.btnInDiemCaNhan.TabIndex = 13;
+            this.btnInDiemCaNhan.Text = "In Điểm Cá Nhân";
+            this.btnInDiemCaNhan.UseVisualStyleBackColor = true;
+            this.btnInDiemCaNhan.Click += new System.EventHandler(this.btnInDiemCaNhan_Click);
+            // 
             // FormDiem
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
@@ -344,5 +356,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn colMASV;
         private DevExpress.XtraGrid.Columns.GridColumn colHOTEN;
         private DevExpress.XtraGrid.Columns.GridColumn colDiem;
+        private System.Windows.Forms.Button btnInDiemCaNhan;
     }
 }

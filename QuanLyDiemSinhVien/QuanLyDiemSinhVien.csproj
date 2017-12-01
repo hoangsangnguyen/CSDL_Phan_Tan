@@ -118,6 +118,12 @@
     <Compile Include="formRP_DSSV.Designer.cs">
       <DependentUpon>formRP_DSSV.cs</DependentUpon>
     </Compile>
+    <Compile Include="formRP_PhieuDiem.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRP_PhieuDiem.Designer.cs">
+      <DependentUpon>formRP_PhieuDiem.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSinhVien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -154,6 +160,12 @@
       <DependentUpon>rp_DSSV.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="rp_InPhieuDiemCaNhan.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>rp_InPhieuDiemCaNhan.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="formDangNhap.resx">
       <DependentUpon>formDangNhap.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +187,9 @@
     <EmbeddedResource Include="formRP_DSSV.resx">
       <DependentUpon>formRP_DSSV.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="formRP_PhieuDiem.resx">
+      <DependentUpon>formRP_PhieuDiem.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSinhVien.resx">
       <DependentUpon>FormSinhVien.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,6 +209,10 @@
     <EmbeddedResource Include="rp_DSSV.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rp_DSSV.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="rp_InPhieuDiemCaNhan.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>rp_InPhieuDiemCaNhan.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

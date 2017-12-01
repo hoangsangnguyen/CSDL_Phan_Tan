@@ -158,5 +158,11 @@ namespace QuanLyDiemSinhVien
                 f.Show();
            
         }
+
+        private void btnInDiemCaNhan_Click(object sender, EventArgs e)
+        {
+            formRP_PhieuDiem f = new formRP_PhieuDiem();
+            f.Show();
+        }
     }
 }
