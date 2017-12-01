@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -94,6 +95,7 @@ namespace QuanLyDiemSinhVien
             bdsDsLop.AddNew();
             txtMaKhoa.Text = maKhoa;
             txtMaKhoa.Enabled = false;
+            txtMaLop.Enabled = txtTenLop.Enabled = true;
 
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = false;
             btnGhi.Enabled = btnReload.Enabled = true;
@@ -107,31 +109,10 @@ namespace QuanLyDiemSinhVien
             switch (choose)
             {
                 case Program.THEM:
-                    if (txtMaLop.Text.Trim() == "")
-                    {
-                        MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
-                        txtMaLop.Focus();
+                    if (!checkInfoAvailable())
                         return;
-                    }
 
-                    if (txtTenLop.Text.Trim() == "")
-                    {
-                        MessageBox.Show("Tên lớp không được thiếu!", "", MessageBoxButtons.OK);
-                        txtTenLop.Focus();
-                        return;
-                    }
-
-                    if (Program.conn.State == ConnectionState.Closed)
-                        Program.conn.Open();
-                    String strLenh = "dbo.sp_TIMLOP ";
-                    Program.sqlcmd = Program.conn.CreateCommand();
-                    Program.sqlcmd.CommandType = CommandType.StoredProcedure;
-                    Program.sqlcmd.CommandText = strLenh;
-                    Program.sqlcmd.Parameters.Add("@X", SqlDbType.Text).Value = "N'" + txtMaLop.Text + "'";
-                    Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                    Program.sqlcmd.ExecuteNonQuery();
-                    String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
-                    if (Ret == "1")
+                    if (!kiemTraMaLop(txtMaLop.Text))
                     {
                         MessageBox.Show("Mã lớp bị trùng!", "", MessageBoxButtons.OK);
                         txtMaLop.Focus();
@@ -139,18 +120,9 @@ namespace QuanLyDiemSinhVien
                         return;
                     }
 
-                    String strLenhKiemTra = "dbo.sp_KiemTraTenLop ";
-                    Program.sqlcmd = Program.conn.CreateCommand();
-                    Program.sqlcmd.CommandType = CommandType.StoredProcedure;
-                    Program.sqlcmd.CommandText = strLenhKiemTra;
-                    Program.sqlcmd.Parameters.Add("@TENLOP", SqlDbType.Text).Value = convertStringToUTF8(txtTenLop.Text.ToString());
-                    Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                    Program.sqlcmd.ExecuteNonQuery();
-                    Program.conn.Close();
-                    String RetKiemTra = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
-                    if (RetKiemTra == "1")
+                    if (!kiemTraTenLop(txtTenLop.Text))
                     {
-                        MessageBox.Show("Tên lớp bị trùng!", "", MessageBoxButtons.OK);
+                        MessageBox.Show("Tên lớp bị trùng !");
                         txtTenLop.Focus();
                         return;
                     }
@@ -198,30 +170,8 @@ namespace QuanLyDiemSinhVien
                         return;
                     }
 
-                    if (txtTenLop.Text.Trim() == "")
-                    {
-                        MessageBox.Show("Tên lớp không được thiếu!", "", MessageBoxButtons.OK);
-                        txtTenLop.Focus();
+                    if (!checkInfoAvailable())
                         return;
-                    }
-
-                    if (Program.conn.State == ConnectionState.Closed)
-                        Program.conn.Open();
-                    String strLenhKiemTraTenLop = "dbo.sp_KiemTraTenLop ";
-                    Program.sqlcmd = Program.conn.CreateCommand();
-                    Program.sqlcmd.CommandType = CommandType.StoredProcedure;
-                    Program.sqlcmd.CommandText = strLenhKiemTraTenLop;
-                    Program.sqlcmd.Parameters.Add("@TENLOP", SqlDbType.Text).Value = convertStringToUTF8(txtTenLop.Text.Trim());
-                    Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                    Program.sqlcmd.ExecuteNonQuery();
-                    Program.conn.Close();
-                    String RetKiemTraTenLop = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
-                    if (RetKiemTraTenLop == "1")
-                    {
-                        MessageBox.Show("Tên lớp bị trùng!", "", MessageBoxButtons.OK);
-                        txtMaLop.Focus();
-                        return;
-                    }
 
                     try
                     {
@@ -230,7 +180,7 @@ namespace QuanLyDiemSinhVien
                         this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                         this.lOPTableAdapter.Update(this.dS.LOP);
 
-                        MessageBox.Show("Update thành công", "", MessageBoxButtons.OK);
+                        MessageBox.Show("Hiệu chỉnh thành công", "", MessageBoxButtons.OK);
 
                     }
                     catch (Exception ex)
@@ -269,16 +219,6 @@ namespace QuanLyDiemSinhVien
             updateUIButtonPhucHoi();
         }
 
-        private String convertStringToUTF8(String s)
-        {
-            var dbEnc = Encoding.UTF8;
-            var uniEnc = Encoding.Unicode;
-            byte[] dbByte = dbEnc.GetBytes(s);
-            byte[] uniBytes = Encoding.Convert(dbEnc, uniEnc, dbByte);
-
-            return uniEnc.GetString(uniBytes);
-        }
-
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             if (Program.conn.State == ConnectionState.Closed)
@@ -287,7 +227,7 @@ namespace QuanLyDiemSinhVien
             Program.sqlcmd = Program.conn.CreateCommand();
             Program.sqlcmd.CommandType = CommandType.StoredProcedure;
             Program.sqlcmd.CommandText = strLenhKiemTraTenLop;
-            Program.sqlcmd.Parameters.Add("@MALOP", SqlDbType.Text).Value = convertStringToUTF8(txtMaLop.Text.Trim());
+            Program.sqlcmd.Parameters.Add("@MALOP", SqlDbType.Text).Value = txtMaLop.Text.Trim();
             Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
             Program.sqlcmd.ExecuteNonQuery();
             Program.conn.Close();
@@ -337,34 +277,6 @@ namespace QuanLyDiemSinhVien
         private void btnReload_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             reload();
-        }
-
-        private void reload()
-        {
-            if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
-            {
-                bdsDsLop.CancelEdit();
-
-                if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
-                gcLop.Enabled = true;
-                groupBox1.Enabled = false;
-                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
-                btnGhi.Enabled = btnPhucHoi.Enabled = false;
-
-            }
-            else
-            {
-                try
-                {
-                    this.lOPTableAdapter.Fill(this.dS.LOP);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Lỗi Reload :" + ex.Message, "", MessageBoxButtons.OK);
-                    return;
-                }
-            }
-
         }
 
         private void btnPhucHoi_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -488,6 +400,40 @@ namespace QuanLyDiemSinhVien
 
                 }
             }
+
+        }
+
+        private void btnExit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void reload()
+        {
+            if (btnHieuChinh.Enabled == false || btnThem.Enabled == false)
+            {
+                bdsDsLop.CancelEdit();
+
+                if (btnThem.Enabled == false) bdsDsLop.Position = vitri;
+                gcLop.Enabled = true;
+                groupBox1.Enabled = false;
+                btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnExit.Enabled = true;
+                btnGhi.Enabled = btnPhucHoi.Enabled = false;
+
+            }
+            else
+            {
+                try
+                {
+                    this.lOPTableAdapter.Fill(this.dS.LOP);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Lỗi Reload :" + ex.Message, "", MessageBoxButtons.OK);
+                    return;
+                }
+            }
+
         }
 
         private void updateUIButtonPhucHoi()
@@ -498,12 +444,57 @@ namespace QuanLyDiemSinhVien
                 btnPhucHoi.Enabled = true;
         }
 
-        private void btnExit_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private bool kiemTraTenLop(String tenLop)
         {
-            this.Close();
+            try
+            {
+
+                String sql = "exec sp_KiemTraTenLop N'" + tenLop + "'";
+                DataTable tb = Program.ExecSqlDataTable(sql);
+                return (tb.Columns.Count == 0);
+                  
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
+            return false;
         }
 
+        private bool checkInfoAvailable()
+        {
+            if (txtMaLop.Text.Trim() == "")
+            {
+                MessageBox.Show("Mã lớp không được thiếu!", "", MessageBoxButtons.OK);
+                txtMaLop.Focus();
+                return false;
+            }
 
+            if (txtTenLop.Text.Trim() == "")
+            {
+                MessageBox.Show("Tên lớp không được thiếu!", "", MessageBoxButtons.OK);
+                txtTenLop.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        private bool kiemTraMaLop(String maLop)
+        {
+            if (Program.conn.State == ConnectionState.Closed)
+                Program.conn.Open();
+            String strLenh = "dbo.sp_TIMLOP ";
+            Program.sqlcmd = Program.conn.CreateCommand();
+            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+            Program.sqlcmd.CommandText = strLenh;
+            Program.sqlcmd.Parameters.Add("@MALOP", SqlDbType.Text).Value = maLop;
+            Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+            Program.sqlcmd.ExecuteNonQuery();
+            String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+            return (Ret != "1");
+        }
 
     }
 
