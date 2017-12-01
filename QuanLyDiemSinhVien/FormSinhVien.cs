@@ -89,7 +89,6 @@ namespace QuanLyDiemSinhVien
                     cmbLop.SelectedIndex = 0;
 
                 }
-
             }
             catch (System.Exception ex)
             {

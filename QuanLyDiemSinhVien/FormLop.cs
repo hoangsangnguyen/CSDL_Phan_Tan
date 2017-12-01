@@ -366,28 +366,36 @@ namespace QuanLyDiemSinhVien
                             return;
 
                         st.Pop();
+
                         try
                         {
                             Lop lopXoa = (Lop)objUndo.obj;
 
-                            if (Program.conn.State == ConnectionState.Closed)
-                                Program.conn.Open();
-                            String strLenh = "dbo.sp_InsertLop";
-                            Program.sqlcmd = Program.conn.CreateCommand();
-                            Program.sqlcmd.CommandType = CommandType.StoredProcedure;
-                            Program.sqlcmd.CommandText = strLenh;
-                            Program.sqlcmd.Parameters.Add("@maLop", SqlDbType.Text).Value = lopXoa.maLop;
-                            Program.sqlcmd.Parameters.Add("@tenLop", SqlDbType.Text).Value = lopXoa.tenLop;
-                            Program.sqlcmd.Parameters.Add("@maKH", SqlDbType.Text).Value = maKhoa;
-
-                            Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                            Program.sqlcmd.ExecuteNonQuery();
-                            Program.conn.Close();
-                            String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
-                            if (Ret == "1")
+                            String sql = "exec sp_InsertLop N'" + lopXoa.maLop + "', N'" + lopXoa.tenLop + "', N'" + maKhoa + "'";
+                            DataTable tb = Program.ExecSqlDataTable(sql);
+                            if (tb.Rows.Count > 0)
                                 MessageBox.Show("Undo success");
                             else
                                 MessageBox.Show("Undo failed");
+
+                            //if (Program.conn.State == ConnectionState.Closed)
+                            //    Program.conn.Open();
+                            //String strLenh = "dbo.sp_InsertLop";
+                            //Program.sqlcmd = Program.conn.CreateCommand();
+                            //Program.sqlcmd.CommandType = CommandType.StoredProcedure;
+                            //Program.sqlcmd.CommandText = strLenh;
+                            //Program.sqlcmd.Parameters.Add("@maLop", SqlDbType.Text).Value = lopXoa.maLop;
+                            //Program.sqlcmd.Parameters.Add("@tenLop", SqlDbType.Text).Value = lopXoa.tenLop;
+                            //Program.sqlcmd.Parameters.Add("@maKH", SqlDbType.Text).Value = maKhoa;
+
+                            //Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
+                            //Program.sqlcmd.ExecuteNonQuery();
+                            //Program.conn.Close();
+                            //String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
+                            //if (Ret == "1")
+                            //    MessageBox.Show("Undo success");
+                            //else
+                            //    MessageBox.Show("Undo failed");
 
                             reload();
 
@@ -452,7 +460,7 @@ namespace QuanLyDiemSinhVien
                 String sql = "exec sp_KiemTraTenLop N'" + tenLop + "'";
                 DataTable tb = Program.ExecSqlDataTable(sql);
                 return (tb.Columns.Count == 0);
-                  
+
             }
             catch (System.Exception ex)
             {
