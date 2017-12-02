@@ -442,6 +442,7 @@ namespace QuanLyDiemSinhVien
                     return;
                 }
             }
+            bdsDsLop.Position = vitri;
 
         }
 

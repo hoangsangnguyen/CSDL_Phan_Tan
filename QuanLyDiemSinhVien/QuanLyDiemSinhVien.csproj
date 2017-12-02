@@ -124,6 +124,12 @@
     <Compile Include="formRP_PhieuDiem.Designer.cs">
       <DependentUpon>formRP_PhieuDiem.cs</DependentUpon>
     </Compile>
+    <Compile Include="formRP_PhieuDiemThi.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formRP_PhieuDiemThi.Designer.cs">
+      <DependentUpon>formRP_PhieuDiemThi.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormSinhVien.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,12 @@
       <DependentUpon>rp_InPhieuDiemCaNhan.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="RP_InPhieuDiemThi.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RP_InPhieuDiemThi.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <EmbeddedResource Include="formDangNhap.resx">
       <DependentUpon>formDangNhap.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,6 +202,9 @@
     <EmbeddedResource Include="formRP_PhieuDiem.resx">
       <DependentUpon>formRP_PhieuDiem.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="formRP_PhieuDiemThi.resx">
+      <DependentUpon>formRP_PhieuDiemThi.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormSinhVien.resx">
       <DependentUpon>FormSinhVien.cs</DependentUpon>
     </EmbeddedResource>
@@ -213,6 +228,10 @@
     <EmbeddedResource Include="rp_InPhieuDiemCaNhan.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
       <LastGenOutput>rp_InPhieuDiemCaNhan.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RP_InPhieuDiemThi.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>RP_InPhieuDiemThi.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>

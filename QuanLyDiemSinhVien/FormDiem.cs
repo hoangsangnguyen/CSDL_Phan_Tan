@@ -190,7 +190,7 @@ namespace QuanLyDiemSinhVien
 
         private void btnReportDsDiem_Click(object sender, EventArgs e)
         {
-            String maLop = cmbMaLop.SelectedValue.ToString();
+            String maLop = cmbMaLop.Text.ToString();
             String tenLop = cmbTenLop.Text.ToString();
             String lanThi = cmbLan.Text.ToString();
             String monHoc = cmbTenMonHoc.Text.ToString();
@@ -217,6 +217,19 @@ namespace QuanLyDiemSinhVien
         {
             Close();
         }
+
+        private void btnInPhieuDiemThi_Click(object sender, EventArgs e)
+        {
+            String maLop = cmbMaLop.Text.ToString();
+            String tenLop = cmbTenLop.Text.ToString();
+            String monHoc = cmbTenMonHoc.Text.ToString();
+            formRP_PhieuDiemThi f = new formRP_PhieuDiemThi();
+            f.maLop = maLop;
+            f.tenLop = tenLop;
+            f.monHoc = monHoc;
+            f.Show();
+        }
+
 
       
     }

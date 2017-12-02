@@ -35,10 +35,16 @@
             System.Windows.Forms.Label mAKHLabel;
             this.label1 = new System.Windows.Forms.Label();
             this.groupBoxFunction = new System.Windows.Forms.GroupBox();
+            this.btnInPhieuDiemThi = new System.Windows.Forms.Button();
+            this.cmbMaLop = new System.Windows.Forms.ComboBox();
+            this.cmbTenLop = new System.Windows.Forms.ComboBox();
+            this.cmbKhoa = new System.Windows.Forms.ComboBox();
+            this.kHOABindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.dS = new QuanLyDiemSinhVien.DS();
+            this.btnThoat = new System.Windows.Forms.Button();
             this.btnInDiemCaNhan = new System.Windows.Forms.Button();
             this.btnReportDsDiem = new System.Windows.Forms.Button();
             this.cmbLan = new System.Windows.Forms.ComboBox();
-            this.dS = new QuanLyDiemSinhVien.DS();
             this.btnLuu = new System.Windows.Forms.Button();
             this.btnBatDau = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,27 +59,22 @@
             this.colMASV = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colHOTEN = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colDiem = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.btnThoat = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.kHOABindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.kHOATableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.KHOATableAdapter();
-            this.cmbKhoa = new System.Windows.Forms.ComboBox();
             this.lOPBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lOPTableAdapter = new QuanLyDiemSinhVien.DSTableAdapters.LOPTableAdapter();
-            this.cmbTenLop = new System.Windows.Forms.ComboBox();
-            this.cmbMaLop = new System.Windows.Forms.ComboBox();
             tENLOPLabel = new System.Windows.Forms.Label();
             mALOPLabel = new System.Windows.Forms.Label();
             tENMHLabel = new System.Windows.Forms.Label();
             mAKHLabel = new System.Windows.Forms.Label();
             this.groupBoxFunction.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLayDiemSinhVien)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gcDiem)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lOPBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,6 +105,15 @@
             tENMHLabel.TabIndex = 4;
             tENMHLabel.Text = "Tên môn học";
             // 
+            // mAKHLabel
+            // 
+            mAKHLabel.AutoSize = true;
+            mAKHLabel.Location = new System.Drawing.Point(49, 40);
+            mAKHLabel.Name = "mAKHLabel";
+            mAKHLabel.Size = new System.Drawing.Size(70, 19);
+            mAKHLabel.TabIndex = 14;
+            mAKHLabel.Text = "Tên Khoa";
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -115,6 +125,7 @@
             // 
             // groupBoxFunction
             // 
+            this.groupBoxFunction.Controls.Add(this.btnInPhieuDiemThi);
             this.groupBoxFunction.Controls.Add(this.cmbMaLop);
             this.groupBoxFunction.Controls.Add(this.cmbTenLop);
             this.groupBoxFunction.Controls.Add(mAKHLabel);
@@ -136,11 +147,72 @@
             this.groupBoxFunction.TabIndex = 1;
             this.groupBoxFunction.TabStop = false;
             // 
+            // btnInPhieuDiemThi
+            // 
+            this.btnInPhieuDiemThi.Location = new System.Drawing.Point(548, 154);
+            this.btnInPhieuDiemThi.Name = "btnInPhieuDiemThi";
+            this.btnInPhieuDiemThi.Size = new System.Drawing.Size(157, 23);
+            this.btnInPhieuDiemThi.TabIndex = 18;
+            this.btnInPhieuDiemThi.Text = "In Phiếu Điểm Thi";
+            this.btnInPhieuDiemThi.UseVisualStyleBackColor = true;
+            this.btnInPhieuDiemThi.Click += new System.EventHandler(this.btnInPhieuDiemThi_Click);
+            // 
+            // cmbMaLop
+            // 
+            this.cmbMaLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbMaLop.FormattingEnabled = true;
+            this.cmbMaLop.Location = new System.Drawing.Point(711, 40);
+            this.cmbMaLop.Name = "cmbMaLop";
+            this.cmbMaLop.Size = new System.Drawing.Size(137, 27);
+            this.cmbMaLop.TabIndex = 17;
+            // 
+            // cmbTenLop
+            // 
+            this.cmbTenLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbTenLop.FormattingEnabled = true;
+            this.cmbTenLop.Location = new System.Drawing.Point(427, 40);
+            this.cmbTenLop.Name = "cmbTenLop";
+            this.cmbTenLop.Size = new System.Drawing.Size(202, 27);
+            this.cmbTenLop.TabIndex = 16;
+            // 
+            // cmbKhoa
+            // 
+            this.cmbKhoa.DataSource = this.kHOABindingSource;
+            this.cmbKhoa.DisplayMember = "MAKH";
+            this.cmbKhoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbKhoa.FormattingEnabled = true;
+            this.cmbKhoa.Location = new System.Drawing.Point(147, 37);
+            this.cmbKhoa.Name = "cmbKhoa";
+            this.cmbKhoa.Size = new System.Drawing.Size(181, 27);
+            this.cmbKhoa.TabIndex = 15;
+            this.cmbKhoa.ValueMember = "TENKH";
+            this.cmbKhoa.SelectedIndexChanged += new System.EventHandler(this.cmbKhoa_SelectedIndexChanged);
+            // 
+            // kHOABindingSource
+            // 
+            this.kHOABindingSource.DataMember = "KHOA";
+            this.kHOABindingSource.DataSource = this.dS;
+            // 
+            // dS
+            // 
+            this.dS.DataSetName = "DS";
+            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
+            // 
+            // btnThoat
+            // 
+            this.btnThoat.Location = new System.Drawing.Point(719, 154);
+            this.btnThoat.Name = "btnThoat";
+            this.btnThoat.Size = new System.Drawing.Size(75, 23);
+            this.btnThoat.TabIndex = 14;
+            this.btnThoat.Text = "Thoát";
+            this.btnThoat.UseVisualStyleBackColor = true;
+            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
+            // 
             // btnInDiemCaNhan
             // 
-            this.btnInDiemCaNhan.Location = new System.Drawing.Point(508, 155);
+            this.btnInDiemCaNhan.Location = new System.Drawing.Point(405, 155);
             this.btnInDiemCaNhan.Name = "btnInDiemCaNhan";
-            this.btnInDiemCaNhan.Size = new System.Drawing.Size(178, 23);
+            this.btnInDiemCaNhan.Size = new System.Drawing.Size(136, 23);
             this.btnInDiemCaNhan.TabIndex = 13;
             this.btnInDiemCaNhan.Text = "In Điểm Cá Nhân";
             this.btnInDiemCaNhan.UseVisualStyleBackColor = true;
@@ -148,9 +220,9 @@
             // 
             // btnReportDsDiem
             // 
-            this.btnReportDsDiem.Location = new System.Drawing.Point(288, 155);
+            this.btnReportDsDiem.Location = new System.Drawing.Point(266, 155);
             this.btnReportDsDiem.Name = "btnReportDsDiem";
-            this.btnReportDsDiem.Size = new System.Drawing.Size(178, 23);
+            this.btnReportDsDiem.Size = new System.Drawing.Size(133, 23);
             this.btnReportDsDiem.TabIndex = 12;
             this.btnReportDsDiem.Text = "In danh sách điểm";
             this.btnReportDsDiem.UseVisualStyleBackColor = true;
@@ -164,11 +236,6 @@
             this.cmbLan.Name = "cmbLan";
             this.cmbLan.Size = new System.Drawing.Size(65, 27);
             this.cmbLan.TabIndex = 11;
-            // 
-            // dS
-            // 
-            this.dS.DataSetName = "DS";
-            this.dS.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
             // 
             // btnLuu
             // 
@@ -222,6 +289,7 @@
             this.tableAdapterManager.DIEMTableAdapter = null;
             this.tableAdapterManager.GIAOVIENTableAdapter = null;
             this.tableAdapterManager.KHOATableAdapter = null;
+            this.tableAdapterManager.LOPTableAdapter = null;
             this.tableAdapterManager.MONHOCTableAdapter = this.mONHOCTableAdapter;
             this.tableAdapterManager.SINHVIENTableAdapter = null;
             this.tableAdapterManager.sp_LayDsSinhVienTheoLopTableAdapter = null;
@@ -284,16 +352,6 @@
             this.colDiem.Visible = true;
             this.colDiem.VisibleIndex = 2;
             // 
-            // btnThoat
-            // 
-            this.btnThoat.Location = new System.Drawing.Point(719, 154);
-            this.btnThoat.Name = "btnThoat";
-            this.btnThoat.Size = new System.Drawing.Size(75, 23);
-            this.btnThoat.TabIndex = 14;
-            this.btnThoat.Text = "Thoát";
-            this.btnThoat.UseVisualStyleBackColor = true;
-            this.btnThoat.Click += new System.EventHandler(this.btnThoat_Click);
-            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.label1);
@@ -304,36 +362,9 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             // 
-            // kHOABindingSource
-            // 
-            this.kHOABindingSource.DataMember = "KHOA";
-            this.kHOABindingSource.DataSource = this.dS;
-            // 
             // kHOATableAdapter
             // 
             this.kHOATableAdapter.ClearBeforeFill = true;
-            // 
-            // mAKHLabel
-            // 
-            mAKHLabel.AutoSize = true;
-            mAKHLabel.Location = new System.Drawing.Point(49, 40);
-            mAKHLabel.Name = "mAKHLabel";
-            mAKHLabel.Size = new System.Drawing.Size(70, 19);
-            mAKHLabel.TabIndex = 14;
-            mAKHLabel.Text = "Tên Khoa";
-            // 
-            // cmbKhoa
-            // 
-            this.cmbKhoa.DataSource = this.kHOABindingSource;
-            this.cmbKhoa.DisplayMember = "MAKH";
-            this.cmbKhoa.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbKhoa.FormattingEnabled = true;
-            this.cmbKhoa.Location = new System.Drawing.Point(147, 37);
-            this.cmbKhoa.Name = "cmbKhoa";
-            this.cmbKhoa.Size = new System.Drawing.Size(181, 27);
-            this.cmbKhoa.TabIndex = 15;
-            this.cmbKhoa.ValueMember = "TENKH";
-            this.cmbKhoa.SelectedIndexChanged += new System.EventHandler(this.cmbKhoa_SelectedIndexChanged);
             // 
             // lOPBindingSource
             // 
@@ -343,24 +374,6 @@
             // lOPTableAdapter
             // 
             this.lOPTableAdapter.ClearBeforeFill = true;
-            // 
-            // cmbTenLop
-            // 
-            this.cmbTenLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbTenLop.FormattingEnabled = true;
-            this.cmbTenLop.Location = new System.Drawing.Point(427, 40);
-            this.cmbTenLop.Name = "cmbTenLop";
-            this.cmbTenLop.Size = new System.Drawing.Size(202, 27);
-            this.cmbTenLop.TabIndex = 16;
-            // 
-            // cmbMaLop
-            // 
-            this.cmbMaLop.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbMaLop.FormattingEnabled = true;
-            this.cmbMaLop.Location = new System.Drawing.Point(711, 40);
-            this.cmbMaLop.Name = "cmbMaLop";
-            this.cmbMaLop.Size = new System.Drawing.Size(137, 27);
-            this.cmbMaLop.TabIndex = 17;
             // 
             // FormDiem
             // 
@@ -378,6 +391,7 @@
             this.Load += new System.EventHandler(this.FormDiem_Load);
             this.groupBoxFunction.ResumeLayout(false);
             this.groupBoxFunction.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.mONHOCBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bdsLayDiemSinhVien)).EndInit();
@@ -385,7 +399,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.kHOABindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lOPBindingSource)).EndInit();
             this.ResumeLayout(false);
 
@@ -422,5 +435,6 @@
         private DSTableAdapters.LOPTableAdapter lOPTableAdapter;
         private System.Windows.Forms.ComboBox cmbMaLop;
         private System.Windows.Forms.ComboBox cmbTenLop;
+        private System.Windows.Forms.Button btnInPhieuDiemThi;
     }
 }
