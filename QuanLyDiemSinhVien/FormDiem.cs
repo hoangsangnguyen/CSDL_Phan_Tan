@@ -31,13 +31,61 @@ namespace QuanLyDiemSinhVien
         private void FormDiem_Load(object sender, EventArgs e)
         {
             dS.EnforceConstraints = false;
-            
+
+            this.kHOATableAdapter.Fill(this.dS.KHOA);
+
+            cmbKhoa.DataSource = new BindingSource(Program.bds_dspm, null);  // sao chép bds_dspm đã load ở form đăng nhập  qua
+            cmbKhoa.DisplayMember = "TENCN";
+            cmbKhoa.ValueMember = "TENSERVER";
+            cmbKhoa.SelectedIndex = Program.mChinhanh;
+
+            if (Program.mGroup == "PGV")
+                cmbKhoa.Enabled = true;  // bật tắt theo phân quyền
+            else
+                cmbKhoa.Enabled = false;
+
             this.mONHOCTableAdapter.Fill(this.dS.MONHOC);
-            this.lOPTableAdapter.Fill(this.dS.LOP);
             setDataSourceForCmbLan();
 
-            gcDiem.Hide();
+            initComboboxLop();
+            updateUI(!SHOW_DIEM);
             
+        }
+
+        private void cmbKhoa_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            initComboboxLop();
+
+        }
+
+        private void initComboboxLop()
+        {
+            cmbKhoa.Enabled = true;
+            try
+            {
+
+                String sql = "exec sp_LayDsLopTheoTenKhoa N'" + cmbKhoa.Text.ToString() + "'";
+                DataTable tb = Program.ExecSqlDataTable(sql);
+                if (tb.Columns.Count > 0)
+                {
+                    cmbTenLop.DataSource = tb;
+                    cmbTenLop.DisplayMember = "TENLOP";
+                    cmbTenLop.ValueMember = "MALOP";
+                    cmbTenLop.SelectedIndex = 0;
+
+                    cmbMaLop.DataSource = tb;
+                    cmbMaLop.DisplayMember = "MALOP";
+                    cmbMaLop.ValueMember = "TENLOP";
+                    cmbMaLop.SelectedIndex = 0;
+
+
+                }
+            }
+            catch (System.Exception ex)
+            {
+                System.Windows.Forms.MessageBox.Show(ex.Message);
+            }
+
         }
 
         private void btnBatDau_Click(object sender, EventArgs e)
@@ -59,7 +107,7 @@ namespace QuanLyDiemSinhVien
             try
             {
                 this.LayDiemSinhVienTableAdapter.Fill(this.dS.sp_LayDiemSinhVien,
-                                                        cmbMaLop.SelectedValue.ToString(),
+                                                        cmbMaLop.Text.ToString(),
                                                         cmbTenMonHoc.SelectedValue.ToString(),
                                                         short.Parse(cmbLan.SelectedValue.ToString()));
             }
@@ -71,12 +119,12 @@ namespace QuanLyDiemSinhVien
             this.LayDiemSinhVienTableAdapter.Connection.ConnectionString = Program.connstr;
 
 
-            DataTable data = this.LayDiemSinhVienTableAdapter.GetData(cmbMaLop.SelectedValue.ToString(),
+            DataTable data = this.LayDiemSinhVienTableAdapter.GetData(cmbMaLop.Text.ToString(),
                                                                     cmbTenMonHoc.SelectedValue.ToString(),
                                                                     short.Parse(cmbLan.SelectedValue.ToString()));
             if (data.Rows.Count == 0)
             {
-                MessageBox.Show("Data null");
+                MessageBox.Show("Không có dữ liệu !");
                 updateUI(!SHOW_DIEM);
             }
            
@@ -130,8 +178,8 @@ namespace QuanLyDiemSinhVien
 
         private void updateUI(bool state)
         {
-            cmbTenLop.Enabled = cmbTenMonHoc.Enabled = cmbMaLop.Enabled = cmbLan.Enabled
-                = btnBatDau.Enabled = state;
+            cmbKhoa.Enabled = cmbTenLop.Enabled = cmbTenMonHoc.Enabled = cmbMaLop.Enabled = cmbLan.Enabled
+                = btnBatDau.Enabled  = btnReportDsDiem.Enabled = btnInDiemCaNhan.Enabled =  btnThoat.Enabled = state ;
             btnLuu.Enabled = !state;
 
             if (state == !SHOW_DIEM)
@@ -164,5 +212,12 @@ namespace QuanLyDiemSinhVien
             formRP_PhieuDiem f = new formRP_PhieuDiem();
             f.Show();
         }
+
+        private void btnThoat_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+      
     }
 }

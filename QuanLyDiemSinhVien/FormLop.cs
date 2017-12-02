@@ -143,7 +143,7 @@ namespace QuanLyDiemSinhVien
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi ghi nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                        MessageBox.Show("Lỗi ghi lớp.\n" + ex.Message, "", MessageBoxButtons.OK);
                         return;
                     }
                     gcLop.Enabled = true;
@@ -185,7 +185,7 @@ namespace QuanLyDiemSinhVien
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi hiệu chỉnh nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                        MessageBox.Show("Lỗi hiệu chỉnh lớp.\n" + ex.Message, "", MessageBoxButtons.OK);
                         return;
                     }
                     gcLop.Enabled = true;
@@ -241,7 +241,7 @@ namespace QuanLyDiemSinhVien
 
             String maLop = "";
 
-            if (MessageBox.Show("Bạn có thật sự muốn xóa nhân viên này ?? ", "Xác nhận",
+            if (MessageBox.Show("Bạn có thật sự muốn xóa lớp này ?? ", "Xác nhận",
                        MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 try
