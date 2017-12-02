@@ -84,7 +84,8 @@ namespace QuanLyDiemSinhVien
             {
                 this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                 this.lOPTableAdapter.Fill(this.dS.LOP);
-                maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
+
+                maKhoa = layMaKhoaTheoTenKhoa(cmbKhoa.Text.ToString()) ;
             }
         }
 
@@ -504,6 +505,26 @@ namespace QuanLyDiemSinhVien
             return (Ret != "1");
         }
 
+        private String layMaKhoaTheoTenKhoa(String tenKhoa)
+        {
+            String ma = "";
+
+            String sql = "exec sp_LayMaKhoaTheoTenKhoa N'" + maKhoa + "'";
+            DataTable tb = Program.ExecSqlDataTable(sql);
+            if (tb.Rows.Count > 0)
+            {
+                try
+                {
+                    ma = tb.Rows[0]["MAKH"].ToString();
+                }
+                catch (Exception e)
+                {
+                    ma = null;
+                }
+            }
+
+            return ma;
+        }
     }
 
     public class Lop
