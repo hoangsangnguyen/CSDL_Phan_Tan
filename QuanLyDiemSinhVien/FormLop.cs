@@ -84,7 +84,8 @@ namespace QuanLyDiemSinhVien
             {
                 this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
                 this.lOPTableAdapter.Fill(this.dS.LOP);
-                maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
+
+                maKhoa = layMaKhoaTheoTenKhoa(cmbKhoa.Text.ToString()) ;
             }
         }
 
@@ -143,7 +144,7 @@ namespace QuanLyDiemSinhVien
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi ghi nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                        MessageBox.Show("Lỗi ghi lớp.\n" + ex.Message, "", MessageBoxButtons.OK);
                         return;
                     }
                     gcLop.Enabled = true;
@@ -185,7 +186,7 @@ namespace QuanLyDiemSinhVien
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi hiệu chỉnh nhân viên.\n" + ex.Message, "", MessageBoxButtons.OK);
+                        MessageBox.Show("Lỗi hiệu chỉnh lớp.\n" + ex.Message, "", MessageBoxButtons.OK);
                         return;
                     }
                     gcLop.Enabled = true;
@@ -241,7 +242,7 @@ namespace QuanLyDiemSinhVien
 
             String maLop = "";
 
-            if (MessageBox.Show("Bạn có thật sự muốn xóa nhân viên này ?? ", "Xác nhận",
+            if (MessageBox.Show("Bạn có thật sự muốn xóa lớp này ?? ", "Xác nhận",
                        MessageBoxButtons.OKCancel) == DialogResult.OK)
             {
                 try
@@ -504,6 +505,26 @@ namespace QuanLyDiemSinhVien
             return (Ret != "1");
         }
 
+        private String layMaKhoaTheoTenKhoa(String tenKhoa)
+        {
+            String ma = "";
+
+            String sql = "exec sp_LayMaKhoaTheoTenKhoa N'" + maKhoa + "'";
+            DataTable tb = Program.ExecSqlDataTable(sql);
+            if (tb.Rows.Count > 0)
+            {
+                try
+                {
+                    ma = tb.Rows[0]["MAKH"].ToString();
+                }
+                catch (Exception e)
+                {
+                    ma = null;
+                }
+            }
+
+            return ma;
+        }
     }
 
     public class Lop
