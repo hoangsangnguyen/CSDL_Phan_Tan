@@ -41,16 +41,19 @@ namespace QuanLyDiemSinhVien
             cmbKhoaSV.ValueMember = "TENSERVER";
             cmbKhoaSV.SelectedIndex = Program.mChinhanh;
 
-            if (Program.mGroup == "PGV")
-                cmbKhoaSV.Enabled = true;  // bật tắt theo phân quyền
-            else
-                cmbKhoaSV.Enabled = false;
-
             initComboboxLop();
             initSinhVienList();
             panelDetail.Enabled = false;
             btnPhucHoi.Enabled = btnGhi.Enabled = false;
 
+        }
+
+        private void updateUIcmbKhoa()
+        {
+            if (Program.mGroup == "PGV")
+                cmbKhoaSV.Enabled = true;  // bật tắt theo phân quyền
+            else
+                cmbKhoaSV.Enabled = false;
         }
 
         private void cmbLop_SelectedIndexChanged(object sender, EventArgs e)
@@ -74,7 +77,7 @@ namespace QuanLyDiemSinhVien
 
         private void initComboboxLop()
         {
-            cmbKhoaSV.Enabled = true;
+            updateUIcmbKhoa();
             try
             {
 

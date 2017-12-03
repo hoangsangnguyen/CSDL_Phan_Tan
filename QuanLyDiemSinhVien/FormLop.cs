@@ -44,8 +44,6 @@ namespace QuanLyDiemSinhVien
             cmbKhoa.ValueMember = "TENSERVER";
             cmbKhoa.SelectedIndex = Program.mChinhanh;
 
-            cmbKhoa.SelectedIndex = 1;
-
             if (Program.mGroup == "PGV")
                 cmbKhoa.Enabled = true;  // bật tắt theo phân quyền
             else
@@ -177,6 +175,13 @@ namespace QuanLyDiemSinhVien
 
                     if (!checkInfoAvailable())
                         return;
+
+                    if (!kiemTraTenLop(txtTenLop.Text))
+                    {
+                        MessageBox.Show("Tên lớp bị trùng !");
+                        txtTenLop.Focus();
+                        return;
+                    }
 
                     try
                     {
