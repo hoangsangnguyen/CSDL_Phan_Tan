@@ -134,10 +134,6 @@ namespace QuanLyDiemSinhVien
                 return;
             }
 
-
-
-
-
             if (Program.conn.State == ConnectionState.Closed)
                 Program.conn.Open();
             String strLenh = "dbo.sp_TaoTaiKhoan";

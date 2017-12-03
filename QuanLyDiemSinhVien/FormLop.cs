@@ -38,24 +38,28 @@ namespace QuanLyDiemSinhVien
         private void FormLop_Load(object sender, EventArgs e)
         {
             dS.EnforceConstraints = false;
-            this.lOPTableAdapter.Fill(this.dS.LOP);
 
-            this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
-
-            this.sINHVIENTableAdapter.Fill(this.dS.SINHVIEN);
-            this.sINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
-
-            maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
-            cmbKhoa.DataSource = Program.bds_dspm;  // sao chép bds_dspm đã load ở form đăng nhập  qua
+            cmbKhoa.DataSource = new BindingSource(Program.bds_dspm, null);  // sao chép bds_dspm đã load ở form đăng nhập  qua
             cmbKhoa.DisplayMember = "TENCN";
             cmbKhoa.ValueMember = "TENSERVER";
             cmbKhoa.SelectedIndex = Program.mChinhanh;
+
+            cmbKhoa.SelectedIndex = 1;
 
             if (Program.mGroup == "PGV")
                 cmbKhoa.Enabled = true;  // bật tắt theo phân quyền
             else
                 cmbKhoa.Enabled = false;
 
+
+            this.lOPTableAdapter.Fill(this.dS.LOP);
+            this.lOPTableAdapter.Connection.ConnectionString = Program.connstr;
+
+            this.sINHVIENTableAdapter.Fill(this.dS.SINHVIEN);
+            this.sINHVIENTableAdapter.Connection.ConnectionString = Program.connstr;
+
+            maKhoa = ((DataRowView)bdsDsLop[0])["MAKH"].ToString();
+           
             groupBox1.Enabled = false;
             btnGhi.Enabled = false;
             updateUIButtonPhucHoi();
@@ -378,25 +382,6 @@ namespace QuanLyDiemSinhVien
                                 MessageBox.Show("Undo success");
                             else
                                 MessageBox.Show("Undo failed");
-
-                            //if (Program.conn.State == ConnectionState.Closed)
-                            //    Program.conn.Open();
-                            //String strLenh = "dbo.sp_InsertLop";
-                            //Program.sqlcmd = Program.conn.CreateCommand();
-                            //Program.sqlcmd.CommandType = CommandType.StoredProcedure;
-                            //Program.sqlcmd.CommandText = strLenh;
-                            //Program.sqlcmd.Parameters.Add("@maLop", SqlDbType.Text).Value = lopXoa.maLop;
-                            //Program.sqlcmd.Parameters.Add("@tenLop", SqlDbType.Text).Value = lopXoa.tenLop;
-                            //Program.sqlcmd.Parameters.Add("@maKH", SqlDbType.Text).Value = maKhoa;
-
-                            //Program.sqlcmd.Parameters.Add("@Ret", SqlDbType.Int).Direction = ParameterDirection.ReturnValue;
-                            //Program.sqlcmd.ExecuteNonQuery();
-                            //Program.conn.Close();
-                            //String Ret = Program.sqlcmd.Parameters["@Ret"].Value.ToString();
-                            //if (Ret == "1")
-                            //    MessageBox.Show("Undo success");
-                            //else
-                            //    MessageBox.Show("Undo failed");
 
                             reload();
 
