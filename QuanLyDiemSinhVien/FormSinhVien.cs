@@ -18,6 +18,8 @@ namespace QuanLyDiemSinhVien
         int vitri = 0;
         int vitriLop = 0;
 
+        bool OPEN_EDIT;
+
         public Stack st = new Stack();
 
         public FormSinhVien()
@@ -132,6 +134,21 @@ namespace QuanLyDiemSinhVien
 
             cmbKhoaSV.SelectedIndex = viTriKhoa;
             cmbLop.SelectedIndex = vitriLop;
+
+            updateUIEdit(!OPEN_EDIT);
+        }
+
+        private void updateUIEdit(bool state)
+        {
+            if (state == OPEN_EDIT) {
+                btnThem.Enabled =  btnHieuChinh.Enabled = btnThoat.Enabled = false;
+                gcSinhVien.Enabled = false;
+                panelDetail.Enabled = true;
+            } else {
+                btnThem.Enabled =  btnHieuChinh.Enabled = btnThoat.Enabled = true;
+                gcSinhVien.Enabled = true;
+                panelDetail.Enabled = false;
+            }
         }
 
         private void btnThem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -143,7 +160,7 @@ namespace QuanLyDiemSinhVien
             checkNghiHoc.Checked = false;
 
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = false;
-            btnGhi.Enabled = btnReload.Enabled = true;
+            btnGhi.Enabled = true;
             gcSinhVien.Enabled = false;
             choose = Program.THEM;
             btnPhucHoi.Enabled = true;

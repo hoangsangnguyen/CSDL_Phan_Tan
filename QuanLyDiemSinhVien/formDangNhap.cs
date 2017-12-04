@@ -50,7 +50,6 @@ namespace QuanLyDiemSinhVien
             Program.conn.Close();
            
             Program.frmMain.HienThiMenu();
-            this.Hide();
         }
 
         private void formDangNhap_Load(object sender, EventArgs e)
