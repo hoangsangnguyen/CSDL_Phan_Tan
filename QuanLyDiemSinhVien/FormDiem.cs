@@ -60,7 +60,7 @@ namespace QuanLyDiemSinhVien
 
         private void initComboboxLop()
         {
-            cmbKhoa.Enabled = true;
+            updateUIcmbKhoa();
             try
             {
 
@@ -87,6 +87,15 @@ namespace QuanLyDiemSinhVien
             }
 
         }
+
+        private void updateUIcmbKhoa()
+        {
+            if (Program.mGroup == "PGV")
+                cmbKhoa.Enabled = true;  // bật tắt theo phân quyền
+            else
+                cmbKhoa.Enabled = false;
+        }
+
 
         private void btnBatDau_Click(object sender, EventArgs e)
         {
@@ -178,7 +187,8 @@ namespace QuanLyDiemSinhVien
 
         private void updateUI(bool state)
         {
-            cmbKhoa.Enabled = cmbTenLop.Enabled = cmbTenMonHoc.Enabled = cmbMaLop.Enabled = cmbLan.Enabled
+            updateUIcmbKhoa();
+            cmbTenLop.Enabled = cmbTenMonHoc.Enabled = cmbMaLop.Enabled = cmbLan.Enabled
                 = btnBatDau.Enabled  = btnReportDsDiem.Enabled = btnInDiemCaNhan.Enabled =  btnThoat.Enabled = state ;
             btnLuu.Enabled = !state;
 

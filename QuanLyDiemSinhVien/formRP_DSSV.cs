@@ -24,7 +24,7 @@ namespace QuanLyDiemSinhVien
         private void formRP_DSSV_Load(object sender, EventArgs e)
         {
             DataTable dt = new DataTable();
-            String strLenh = "EXEC sp_InDanhSachSinhVien N'"+maLop+"'";
+            String strLenh = "EXEC sp_InDanhSachSinhVien N'" + maLop + "'";
             //MessageBox.Show(strLenh);
             dt = Program.ExecSqlDataTable(strLenh);
             rp_DSSV rp = new rp_DSSV();

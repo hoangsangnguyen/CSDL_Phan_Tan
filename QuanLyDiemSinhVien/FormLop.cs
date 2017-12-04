@@ -500,7 +500,7 @@ namespace QuanLyDiemSinhVien
         {
             String ma = "";
 
-            String sql = "exec sp_LayMaKhoaTheoTenKhoa N'" + maKhoa + "'";
+            String sql = "exec sp_LayMaKhoaTheoTenKhoa N'" + tenKhoa + "'";
             DataTable tb = Program.ExecSqlDataTable(sql);
             if (tb.Rows.Count > 0)
             {
