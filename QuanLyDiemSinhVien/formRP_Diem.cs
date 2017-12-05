@@ -28,13 +28,15 @@ namespace QuanLyDiemSinhVien
             String strLenh = "EXEC sp_LayDiemSinhVien N'" + maLop + "', N'" + maMH + "', N'" + lanThi+ "'";
             //MessageBox.Show(strLenh);
             dt = Program.ExecSqlDataTable(strLenh);
+            
             rp_DsDiem rp = new rp_DsDiem();
+
 
             rp.SetDataSource(dt);
             rp.SetParameterValue("txtLop", tenLop);
             rp.SetParameterValue("txtMonHoc", monHoc);
             rp.SetParameterValue("txtLanThi", lanThi);
-            crystalReportViewer1.ReportSource = rp;
+            crystalReportViewer2.ReportSource = rp;
         }
     }
 }

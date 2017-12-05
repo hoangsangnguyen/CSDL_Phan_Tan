@@ -147,19 +147,37 @@ namespace QuanLyDiemSinhVien
             String maMH = cmbTenMonHoc.SelectedValue.ToString();
             int lan = Int32.Parse(cmbLan.SelectedValue.ToString());
             float diem = 0;
+
             foreach (DataRowView row in bdsLayDiemSinhVien)
             {
                 maSv = row["MASV"].ToString().Trim();
 
-                if (row["Diem"].ToString().Trim() != "")
+                String diemStr = row["Diem"].ToString().Trim();
+                try
+                {
+                    if (float.Parse(diemStr) < 0)
+                    {
+                        MessageBox.Show("Không được nhập điểm âm");
+                        return;
+                    }
+
+                }
+                catch (Exception ex)
+                {
+                    Console.Write(ex.Message);
+                } 
+
+                
+                if (diemStr != "")
                 {
                     diem = float.Parse(row["Diem"].ToString());
                     table.Rows.Add(maSv, maMH, lan, diem);
                 }
-                
+
+               
             }
 
-
+            
             if (Program.conn.State == ConnectionState.Closed)
                 Program.conn.Open();
             String strLenhKiemTraTenLop = "dbo.sp_InsertAndUpdateDiem ";

@@ -22,6 +22,8 @@ namespace QuanLyDiemSinhVien
         int vitri = 0;
         string maKhoa = "";
 
+        Lop lop = null;
+
         public FormLop()
         {
             InitializeComponent();
@@ -183,6 +185,10 @@ namespace QuanLyDiemSinhVien
                         return;
                     }
 
+                    Program.ObjectUndo objHieuChinh = new Program.ObjectUndo(Program.HIEU_CHINH, lop);
+                    st.Push(objHieuChinh);
+
+                    updateUIButtonPhucHoi();
                     try
                     {
                         bdsDsLop.EndEdit();
@@ -222,11 +228,9 @@ namespace QuanLyDiemSinhVien
             choose = Program.HIEU_CHINH;
 
             // lưu stack cho undo
-            Lop lop = new Lop(txtMaLop.Text, txtTenLop.Text, txtMaKhoa.Text);
-            Program.ObjectUndo obj = new Program.ObjectUndo(Program.HIEU_CHINH, lop);
-            st.Push(obj);
-
-            updateUIButtonPhucHoi();
+             
+            lop = new Lop(txtMaLop.Text, txtTenLop.Text, txtMaKhoa.Text);
+           
         }
 
         private void btnXoa_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
