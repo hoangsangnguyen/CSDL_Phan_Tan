@@ -20,6 +20,8 @@ namespace QuanLyDiemSinhVien
 
         bool OPEN_EDIT;
 
+        SinhVien sv = null; // sinh vien hiệu chỉnh
+
         public Stack st = new Stack();
 
         public FormSinhVien()
@@ -140,12 +142,15 @@ namespace QuanLyDiemSinhVien
 
         private void updateUIEdit(bool state)
         {
-            if (state == OPEN_EDIT) {
-                btnThem.Enabled =  btnHieuChinh.Enabled = btnThoat.Enabled = false;
+            if (state == OPEN_EDIT)
+            {
+                btnThem.Enabled = btnHieuChinh.Enabled = btnThoat.Enabled = false;
                 gcSinhVien.Enabled = false;
                 panelDetail.Enabled = true;
-            } else {
-                btnThem.Enabled =  btnHieuChinh.Enabled = btnThoat.Enabled = true;
+            }
+            else
+            {
+                btnThem.Enabled = btnHieuChinh.Enabled = btnThoat.Enabled = true;
                 gcSinhVien.Enabled = true;
                 panelDetail.Enabled = false;
             }
@@ -170,6 +175,15 @@ namespace QuanLyDiemSinhVien
 
         private void btnHieuChinh_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            DataTable dt = DsSinhVienTheoLopTableAdapter.GetData(cmbLop.SelectedValue.ToString());
+            if (dt.Rows.Count == 0)
+            {
+                MessageBox.Show("Không có sinh viên trong lớp để hiệu chỉnh");
+                return;
+            }
+
+            cmbKhoaSV.Enabled = cmbLop.Enabled = false;
+
             vitri = DsSinhVienTheoLopBindingSource.Position;
             panelDetail.Enabled = true;
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = false;
@@ -180,7 +194,7 @@ namespace QuanLyDiemSinhVien
             choose = Program.HIEU_CHINH;
 
             // lưu stack cho undo
-            SinhVien sv = new SinhVien(txtMaSV.Text.ToString(),
+            sv = new SinhVien(txtMaSV.Text.ToString(),
                                     txtHoSV.Text.ToString(),
                                     txtTenSV.Text.ToString(),
                                     checkPhaiSV.Checked,
@@ -188,9 +202,6 @@ namespace QuanLyDiemSinhVien
                                     txtNoiSinhSV.Text.ToString(),
                                     txtDiaChiSV.Text.ToString(),
                                     checkNghiHoc.Checked);
-            Program.ObjectUndo obj = new Program.ObjectUndo(Program.HIEU_CHINH, sv);
-            st.Push(obj);
-            updateUIButtonPhucHoi();
 
         }
 
@@ -208,8 +219,12 @@ namespace QuanLyDiemSinhVien
                     break;
 
                 case Program.HIEU_CHINH:
-                    if (checkAvailabelInfo())
+                    if (checkAvailabelInfo() && sv != null)
                     {
+                        Program.ObjectUndo obj = new Program.ObjectUndo(Program.HIEU_CHINH, sv);
+                        st.Push(obj);
+                        updateUIButtonPhucHoi();
+
                         xuLyHieuChinh(txtMaSV.Text.ToString(),
                                    txtHoSV.Text.ToString(),
                                    txtTenSV.Text.ToString(),
@@ -284,10 +299,8 @@ namespace QuanLyDiemSinhVien
             gcSinhVien.Enabled = true;
             btnThem.Enabled = btnHieuChinh.Enabled = btnXoa.Enabled = btnReload.Enabled = btnThoat.Enabled = true;
             cmbLop.Enabled = true;
-            if (Program.mGroup == "PGV")
-                cmbKhoaSV.Enabled = true;  // bật tắt theo phân quyền
-            else
-                cmbKhoaSV.Enabled = false;
+
+            updateUIcmbKhoa();
             btnGhi.Enabled = false;
 
             panelDetail.Enabled = false;
@@ -418,7 +431,8 @@ namespace QuanLyDiemSinhVien
 
                     this.DsSinhVienTheoLopTableAdapter.Connection.ConnectionString = Program.connstr;
                     int result = this.DsSinhVienTheoLopTableAdapter.Delete(maSV);
-                    if (result == 1) {
+                    if (result == 1)
+                    {
                         if (haveUndo)
                             MessageBox.Show("Xóa sinh viên thành công", "", MessageBoxButtons.OK);
                         else
@@ -480,13 +494,16 @@ namespace QuanLyDiemSinhVien
                 if (st.Count == 0)
                     return;
 
-                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Pop();
+                Program.ObjectUndo objUndo = (Program.ObjectUndo)st.Peek();
                 Object obj = objUndo.obj;
                 switch (objUndo.type)
                 {
                     case Program.THEM:
-                        MessageBox.Show("Khôi phục sau khi thêm");
+                        if (MessageBox.Show("Khôi phục sau khi thêm", "Xác nhận", MessageBoxButtons.OKCancel)
+                                        == DialogResult.Cancel)
+                            return;
 
+                        st.Pop();
                         String maSV = "";
 
                         try
@@ -504,7 +521,11 @@ namespace QuanLyDiemSinhVien
                         break;
 
                     case Program.HIEU_CHINH:
-                        MessageBox.Show("Khôi phục sau khi hiệu chỉnh");
+                        if (MessageBox.Show("Khôi phục sau khi hiệu chỉnh", "Xác nhận", MessageBoxButtons.OKCancel)
+                                     == DialogResult.Cancel)
+                            return;
+
+                        st.Pop();
                         try
                         {
                             SinhVien sv = (SinhVien)objUndo.obj;
@@ -521,7 +542,11 @@ namespace QuanLyDiemSinhVien
                         break;
 
                     case Program.XOA:
-                        MessageBox.Show("Khôi phục sau khi xóa");
+                        if (MessageBox.Show("Khôi phục sau khi xóa", "Xác nhận", MessageBoxButtons.OKCancel)
+                                     == DialogResult.Cancel)
+                            return;
+
+                        st.Pop();
                         try
                         {
                             SinhVien svXoa = (SinhVien)objUndo.obj;

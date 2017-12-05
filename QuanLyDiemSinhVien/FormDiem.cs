@@ -39,10 +39,7 @@ namespace QuanLyDiemSinhVien
             cmbKhoa.ValueMember = "TENSERVER";
             cmbKhoa.SelectedIndex = Program.mChinhanh;
 
-            if (Program.mGroup == "PGV")
-                cmbKhoa.Enabled = true;  // bật tắt theo phân quyền
-            else
-                cmbKhoa.Enabled = false;
+            updateUIcmbKhoa();
 
             this.mONHOCTableAdapter.Fill(this.dS.MONHOC);
             setDataSourceForCmbLan();
@@ -99,7 +96,6 @@ namespace QuanLyDiemSinhVien
 
         private void btnBatDau_Click(object sender, EventArgs e)
         {
-            gcDiem.Show();
             updateUI(SHOW_DIEM);
             initGcMaSvHoTenSinhVien();
 
