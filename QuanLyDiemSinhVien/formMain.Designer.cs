@@ -36,7 +36,6 @@
             this.btnSinhVien = new DevExpress.XtraBars.BarButtonItem();
             this.btnMonHoc = new DevExpress.XtraBars.BarButtonItem();
             this.btnDiem = new DevExpress.XtraBars.BarButtonItem();
-            this.btnTaoTaiKhoan = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPage2 = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -64,8 +63,7 @@
             this.btnLop,
             this.btnSinhVien,
             this.btnMonHoc,
-            this.btnDiem,
-            this.btnTaoTaiKhoan});
+            this.btnDiem});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
             this.ribbonControl1.MaxItemId = 8;
             this.ribbonControl1.Name = "ribbonControl1";
@@ -125,14 +123,6 @@
             this.btnDiem.Name = "btnDiem";
             this.btnDiem.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnDiem_ItemClick);
             // 
-            // btnTaoTaiKhoan
-            // 
-            this.btnTaoTaiKhoan.Caption = "Tạo Tài Khoản";
-            this.btnTaoTaiKhoan.Id = 7;
-            this.btnTaoTaiKhoan.ImageOptions.LargeImage = global::QuanLyDiemSinhVien.Properties.Resources.secrecy_icon_48;
-            this.btnTaoTaiKhoan.Name = "btnTaoTaiKhoan";
-            this.btnTaoTaiKhoan.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnTaoTaiKhoan_ItemClick);
-            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -144,7 +134,6 @@
             // 
             this.ribbonPageGroup1.ItemLinks.Add(this.btnDangNhap);
             this.ribbonPageGroup1.ItemLinks.Add(this.btnThoat);
-            this.ribbonPageGroup1.ItemLinks.Add(this.btnTaoTaiKhoan);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.Text = "ribbonPageGroup1";
             // 
@@ -259,7 +248,6 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup4;
         private DevExpress.XtraBars.BarButtonItem btnDiem;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
-        private DevExpress.XtraBars.BarButtonItem btnTaoTaiKhoan;
     }
 }
 
